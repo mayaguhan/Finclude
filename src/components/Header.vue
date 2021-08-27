@@ -14,10 +14,8 @@
       <v-spacer></v-spacer>
 
       <router-link to="/about" id="textRouterLink" style="margin-right: 7px">About</router-link>
-
-      <span style="margin-right: 7px">Calculator</span>
-
-      <span>Savings</span>
+      <router-link to="/calculator" id="textRouterLink" style="margin-right: 7px">Calculator</router-link>
+      <router-link to="/savings" id="textRouterLink">Savings</router-link>
 
 
       <!-- <v-menu
