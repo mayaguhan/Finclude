@@ -14,14 +14,14 @@
 
         <div style="margin:auto; text-align:center; padding-top: 50px">
             <h1><i>Weekly Goals to Achieve</i></h1>
-                To hit your goal, you can spend ______ weekly.
+                To hit your goal, you should only spend ______ weekly.
                 <br>
                 You have to save _____ more to hit your goal this week.
         </div>
 
         <div style="margin:auto; text-align:center; padding-top: 50px">
             <h1><i>Monthly Goals to Achieve</i></h1>
-                To hit your goal, you can spend ______ monthly.
+                To hit your goal, you should only spend ______ monthly.
                 <br>
                 You have to save _____ more to hit your goal this month.
 
