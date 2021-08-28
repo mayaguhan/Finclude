@@ -1,6 +1,6 @@
 <template>
     <v-container>
-                <v-row class="mt-5 blue lighten-5" style="border-radius: 40px">
+        <v-row class="mt-5 blue lighten-5" id="aboutFadeIn" style="border-radius: 40px">
             <v-col>
                 <img src="https://tinmansachs.s3.amazonaws.com/About.jpg" style="height: 300px; border-radius: 20px">
             </v-col>
@@ -22,10 +22,12 @@
 
             </v-col>
         </v-row>
-        <div class="mt-15 typewriter">
-            <h1 style="color:#580057; font-size: 75px">Let's Get Started....</h1>
+
+
+        <div id="restFadeIn" class="mt-8 typewriter">
+            <h1 :style="styleObjTitle">Let's Get Started....</h1>
         </div>
-        <v-row>
+        <v-row id="restFadeIn" @mouseover="showTitle()">
             <v-col>
                 <img class="main_img" src="../../public/assets/amy-hirschi-JaoVGh5aJ3E-unsplash.jpg" style="height: 500px; border-radius: 10px">
             </v-col>
@@ -73,11 +75,17 @@ export default {
     name: "Homepage",
     data() {
         return {
-            //
+            styleObjTitle: {
+                color: "#580057",
+                fontSize: "75px",
+                display: "none"
+            }
         }
     },
     methods: {
-        //
+        showTitle(){
+            this.styleObjTitle.display = "block";
+        }
     },
     computed: {
         //
@@ -94,6 +102,24 @@ export default {
     text-align: center;
     align-content: center;
     margin: auto;
+}
+
+#aboutFadeIn {
+    animation: fadein 2s;
+}
+
+#restFadeIn {
+    animation: restfadein 5s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes restfadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 .typewriter h1 {
