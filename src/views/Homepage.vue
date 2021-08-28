@@ -37,7 +37,7 @@
                             At Finclude, we believe that knowledge is power. We have a specially curated list of articles for you to learn how to better manage your finances and get to know about the latest financial developments. 
                             <br>
                             <br>
-                            <router-link to="/financialadvisors">Click here to start learning!</router-link>
+                            <router-link to="/articles">Click here to start learning!</router-link>
                         </p>
                     </div>
                 </div>

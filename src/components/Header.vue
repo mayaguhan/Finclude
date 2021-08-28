@@ -20,9 +20,9 @@
       <v-spacer></v-spacer>
 
       <span class="mr-3" style="font-weight: bold"> Welcome, {{user}}!</span>
-      <router-link to="/about" id="textRouterLink" style="margin-right: 7px">About</router-link>
+      <!-- <router-link to="/about" id="textRouterLink" style="margin-right: 7px">About</router-link>
       <router-link to="/calculator" id="textRouterLink" style="margin-right: 7px">Calculator</router-link>
-      <router-link to="/savings" id="textRouterLink">Savings</router-link>
+      <router-link to="/savings" id="textRouterLink">Savings</router-link> -->
 
     </v-app-bar>
   </div>

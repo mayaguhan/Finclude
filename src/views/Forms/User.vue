@@ -58,6 +58,21 @@
                 </v-col>
             </v-row>
 
+            <v-row>
+                <v-col
+                    cols="12"
+                >
+                    Personal Description
+                    <v-textarea
+                    solo
+                    name="input-7-4"
+                    class="mt-3"
+                    placeholder="Please tell us more about yourself and your concerns..."
+                    v-model="bio"
+                    ></v-textarea>
+                </v-col>
+            </v-row>
+
             <div :style="styleObject">
                 You need to save {{ monthlyRecommended }} per month and {{ weeklyRecommended }} per week! With Finclude, we will help you achieve your goals and deepen your knowledge in managing your finances.
             </div>
@@ -74,6 +89,7 @@
 <script>
   import Vue from 'vue'
   import VueRouter from 'vue-router'
+  import axios from 'axios'
   
 
   Vue.use(VueRouter)
@@ -112,7 +128,8 @@ export default {
             styleObject: {
                 color: "#5D35E5",
                 display: "none"
-            }
+            },
+            bio: ""
 
         }
     },
@@ -136,6 +153,31 @@ export default {
         },
         submitForm() {
             // Function to create new user
+            var id = Math.floor((Math.random()*1000000)+1).toString();
+
+            var userObj = {
+                "id": id,
+                "firstName" : this.firstName,
+                "prefCurrency": this.chosenCurrency,
+                "monExpenditure": this.estimatedMonthly,
+                "lastName": this.lastName,
+                "bio": this.bio,
+                "salary": this.salary,
+                "goal": this.savingGoal,
+                "lang": this.language,
+                "yearsToGoal": this.yearsToGoal,
+                "advisorId": "000000",
+                "monSavings": this.monSavings,
+                "tags": "newUser"
+            }
+
+            axios.put("https://vir9lpv010.execute-api.us-east-1.amazonaws.com/production/users", userObj)
+                .then(response => {
+                    console.log(response);
+                })
+
+
+            // Updat vuex store
             this.$store.commit("setUser", this.firstName);
             this.$store.commit("setLogin", 1);
 
