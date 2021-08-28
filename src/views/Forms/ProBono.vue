@@ -3,40 +3,35 @@
         <h1>Let's Get Started!</h1>
         <v-form
             ref="form"
-            v-model="valid"
-            lazy-validation
             class="mt-3">
-
             <v-row class="mb-1">
                 <v-col>
-                    Choose Languages You Are Proficient In
-                    <br>
-                    <input type="checkbox" id="english" value="English" v-model="checkedLanguages">
-                    <label for="jack">English</label>
-                    <br>
-                    <input type="checkbox" id="tamil" value="Tamil" v-model="checkedLanguages">
-                    <label for="john">Tamil</label>
-                    <br>
-                    <input type="checkbox" id="malay" value="Malay" v-model="checkedLanguages">
-                    <label for="mike">Malay</label>
-                    <br>
-                    <input type="checkbox" id="chinese" value="Chinese" v-model="checkedLanguages">
-                    <label for="chinese">Chinese</label>
-                    <br>
-                    <input type="checkbox" id="tagalog" value="Tagalog" v-model="checkedLanguages">
-                    <label for="tagalog">Tagalog</label>
-                    <br>
-                    <input type="checkbox" id="bengali" value="Bengali" v-model="checkedLanguages">
-                    <label for="bengali">Bengali</label>
-                    <br>
-                    <input type="checkbox" id="indonesian" value="Indonesian" v-model="checkedLanguages">
-                    <label for="Bahasa Indonesia">Bahasa Indonesia</label>
-                    <br>
-                    <span>Checked Languages: {{ checkedLanguages }}</span>
+                    Language
+                    <v-select
+                        v-model="selectedLang"
+                        :items="languages"
+                        label="Language"
+                        multiple
+                        outlined dense
+                        >
+                        <template v-slot:prepend-item>
+                            <v-list-item
+                            ripple
+                            
+                            >
+                            <v-list-item-content>
+                                <v-list-item-title>
+                                Select All
+                                </v-list-item-title>
+                            </v-list-item-content>
+                            </v-list-item>
+                            <v-divider class="mt-2"></v-divider>
+                        </template>
+                        </v-select>
                 </v-col>
                 <v-col>
                     Select Your Company
-                    <v-select v-model="chosenCompany" outlined dense @change="updateCompany()" :items="companyList"></v-select>
+                    <v-select v-model="chosenCompany" label="Company" outlined dense @change="updateCompany()" :items="companyList"></v-select>
                 </v-col>
             </v-row>
 
@@ -65,13 +60,13 @@
             <v-row>
                 <v-col
                     cols="12"
-                    md="6"
                 >
                     Personal Description
                     <v-textarea
                     solo
                     name="input-7-4"
                     placeholder="Write a description about yourself and what you specialize in..."
+                    v-model="description"
                     ></v-textarea>
                 </v-col>
             </v-row>
@@ -94,7 +89,7 @@ export default {
     name: "UserForm",
     data() {
         return {
-            lang: [
+            languages: [
             "English",
             "Tamil",
             "Malay",
@@ -103,6 +98,7 @@ export default {
             "Bengali",
             "Bahasa Indonesia"
             ],
+            selectedLang: [],
             checkedLanguages: [],
             chosenCompany: "",
             companyList: [
@@ -117,7 +113,8 @@ export default {
             styleObject: {
                 color: "#5D35E5",
                 display: "none"
-            }
+            },
+            description: ""
 
         }
     },
@@ -133,7 +130,10 @@ export default {
 
             // If success, redirect
             this.$router.push('/homepage');
-        }
+        },
+    },
+    computed: {
+        //
     },
     created() {
         //
