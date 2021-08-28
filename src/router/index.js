@@ -43,6 +43,13 @@ const routes = [
     name: 'UserForm',
     component: () => import('../views/Forms/User.vue')
   },
+  
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('../views/Chart.vue')
+  },
+
   {
     path: '/financialadvisors',
     name: 'FinancialAdvisors',
