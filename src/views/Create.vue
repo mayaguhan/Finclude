@@ -13,7 +13,7 @@
                     </div>
                     <div>
                         <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium alias praesentium quod id velit dicta ratione eveniet? Nulla consequuntur maxime quis molestias obcaecati ipsum, minima dicta similique. Obcaecati, quaerat. Iste. 
+                            At Tinman Sachs, we believe that useful financial products and services that meets the needs of the people should be available for all. Not just for the rich nor the highly connected people, but for every single person. Thus, we began to start our first step towards our financially inclusive vision with Finclude. Although simple, Finclude helps connect the people who need financial advice and planning the most with people who are able to provide it. <br><br> Join us in taking steps towards the greater good, use <b>Finclude</b>! 
                             <br>
                             <br>
                         </p>
