@@ -2,12 +2,12 @@
     <v-container>
         <v-row>
             <v-col>
-                <img src="../assets/amy-hirschi-JaoVGh5aJ3E-unsplash.jpg" style="height: 500px; border-radius: 10px">
+                <img src="../../public/assets/amy-hirschi-JaoVGh5aJ3E-unsplash.jpg" style="height: 500px; border-radius: 10px">
             </v-col>
             <v-col>
                 <v-row id="user">
                     <v-col class="mt-4">
-                        <img src="../assets/businessman.png" style="height: 175px">
+                        <img src="../../public/assets/businessman.png" style="height: 175px">
                         <router-link to="/probonoform" style="text-decoration: none">
                             <v-btn text>
                                 I want to be a pro-bono advisor!
@@ -17,7 +17,7 @@
                 </v-row>
                 <v-row id="user">
                     <v-col class="mt-2">
-                        <img src="../assets/thinking.jpg" style="height: 175px">
+                        <img src="../../public/assets/thinking.jpg" style="height: 175px">
 
                         <router-link to="/userform" style="text-decoration: none">
                             <v-btn text>
