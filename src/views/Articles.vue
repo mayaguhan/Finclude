@@ -28,7 +28,7 @@
                             </v-img>
 
                             
-                            <v-card-title class="text-wrap">{{article.title}}</v-card-title>
+                            <v-card-title class="black--text" style="padding-bottom: 40px" >{{article.title}}</v-card-title>
 
                             <v-card-text>
                                 <v-row
@@ -36,7 +36,7 @@
                                     class="mx-0"
                                 >
                                 </v-row>
-
+                            
                             <div class="black--text">"{{article.description}}"</div>
                             </v-card-text>
 
