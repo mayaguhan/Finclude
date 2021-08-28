@@ -39,11 +39,13 @@
     methods: {
         login() {
           var loginCheck = window.sessionStorage;
-          if (loginCheck.login != 1){
-            return false;
+          console.log(loginCheck);
+          if (loginCheck.login == 1){
+            return true;
           }
           else{
-            return true;
+            return false;
+
           }
         }
     },

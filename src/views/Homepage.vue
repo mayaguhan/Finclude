@@ -49,7 +49,7 @@
         </v-row>
 
 
-        <v-row class="mt-10 blue lighten-5" style="border-radius: 40px">
+        <v-row class="mt-10 mb-4 blue lighten-5" style="border-radius: 40px">
             <v-col>
                 <img src="../../public/assets/Dashboard.jpg" style="height: 300px; border-radius: 20px">
             </v-col>

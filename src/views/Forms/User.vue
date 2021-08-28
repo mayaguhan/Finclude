@@ -139,7 +139,7 @@ export default {
             loginCheck.setItem('login', 1);
 
 
-            console.log(loginCheck);
+            console.log(loginCheck.login);
 
 
             // If success, redirect

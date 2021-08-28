@@ -5,6 +5,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    name: 'Create',
+    component: () => import('../views/Create.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
@@ -55,10 +60,11 @@ const routes = [
     name: 'Homepage',
     component: () => import('../views/Homepage.vue')
   },
+
   {
-    path: '/',
-    name: 'Create',
-    component: () => import('../views/Create.vue')
+    path: '/articles',
+    name: 'Articles',
+    component: () => import('../views/Articles.vue')
   }
 ]
 
