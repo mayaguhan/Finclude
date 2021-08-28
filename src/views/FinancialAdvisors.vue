@@ -1,8 +1,8 @@
 <template>
     <div style="text-align: center" class="mt-3">
-        <h1 @click="sayHello">Advisors</h1>
+        <h1 @click="sayHello">Financial Advisors</h1>
 
-        <v-container class="my-5" grid-list-md>
+        <v-container class="" grid-list-md>
             <v-layout row wrap>
                 <v-flex xs12 sm6 md4 lg4 v-for="person in team" :key="person.name">
                     <v-hover>

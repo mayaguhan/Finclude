@@ -135,10 +135,15 @@ export default {
         },
         submitForm() {
             // Function to create new user
-            
+            var loginCheck = window.sessionStorage;
+            loginCheck.setItem('login', 1);
+
+
+            console.log(loginCheck);
+
 
             // If success, redirect
-            this.$router.push('/');
+            this.$router.push('/homepage');
         }
     },
     created() {

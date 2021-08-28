@@ -5,11 +5,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/create',
-    name: 'Create',
-    component: () => import('../views/Create.vue')
-  },
-  {
     path: '/about',
     name: 'About',
     // route level code-splitting
@@ -56,9 +51,14 @@ const routes = [
     component: () => import('../views/FinancialAdvisors.vue')
   },
   {
-    path: '/',
+    path: '/homepage',
     name: 'Homepage',
     component: () => import('../views/Homepage.vue')
+  },
+  {
+    path: '/',
+    name: 'Create',
+    component: () => import('../views/Create.vue')
   }
 ]
 
@@ -67,5 +67,20 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+
+// router.beforeEach((to, from, next) => {
+//   var loginCheck = window.sessionStorage;
+//   if (loginCheck.login == 1 && to.path != "/") {
+//     console.log("Hello");
+//     next();
+//     console.log("Hello");
+//   } else {
+    
+//     next({
+//       path: '/',
+//     });
+//   }
+// });
 
 export default router
