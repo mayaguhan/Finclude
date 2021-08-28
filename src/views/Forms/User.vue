@@ -63,7 +63,7 @@
             </div>
 
             
-            <v-btn @click="submitForm()" depressed color="#A300A1">
+            <v-btn @click="submitForm()" depressed color="#A300A1" class="mt-3">
                 <span style="color: white">SUBMIT</span> 
             </v-btn>
             
@@ -138,7 +138,7 @@ export default {
             
 
             // If success, redirect
-            this.$router.push('/homepage');
+            this.$router.push('/');
         }
     },
     created() {

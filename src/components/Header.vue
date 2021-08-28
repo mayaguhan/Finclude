@@ -7,7 +7,7 @@
     >
       <v-toolbar-title>
         <router-link to="/" id="textRouterLink" style="text-decoration: none; color: white">
-          <img src="../assets/logo.png" style="height: 80px; margin-top: 10px;">
+          <img src="../../public/assets/logo.png" style="height: 80px; margin-top: 10px;">
         </router-link> 
       </v-toolbar-title>
 
