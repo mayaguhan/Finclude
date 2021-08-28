@@ -58,7 +58,11 @@
                 </v-col>
             </v-row>
 
-            <v-row>
+            <div :style="styleObject">
+                You need to save {{ chosenCurrency }}{{ monthlyRecommended }} per month and {{ chosenCurrency }}{{ weeklyRecommended }} per week! With Finclude, we will help you achieve your goals and deepen your knowledge in managing your finances.
+            </div>
+
+            <v-row class="mt-3">
                 <v-col
                     cols="12"
                 >
@@ -73,9 +77,7 @@
                 </v-col>
             </v-row>
 
-            <div :style="styleObject">
-                You need to save {{ monthlyRecommended }} per month and {{ weeklyRecommended }} per week! With Finclude, we will help you achieve your goals and deepen your knowledge in managing your finances.
-            </div>
+
 
             
             <v-btn @click="submitForm()" depressed color="#A300A1" class="mt-3">

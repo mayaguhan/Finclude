@@ -65,7 +65,7 @@
                             Set goals for yourself and manage your expenses. View comprehensive dashboards about your spending habits. Your financial advisor can analyze your spending habits to advise you better.
                             <br>
                             <br>
-                            <router-link to="/dashboard">Click here to view your personalized dashboards!</router-link>
+                            <router-link to="/expense">Click here to view your personalized dashboards!</router-link>
                         </p>
                     </div>
                 </div>

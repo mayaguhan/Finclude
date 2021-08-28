@@ -28,7 +28,9 @@
                             </v-img>
 
                             
-                            <v-card-title class="black--text" style="padding-bottom: 40px" >{{article.title}}</v-card-title>
+                            <v-card-text style="padding-bottom: 40px; color: black" >
+                                <h2>{{article.title}}</h2>
+                            </v-card-text>
 
                             <v-card-text>
                                 <v-row
