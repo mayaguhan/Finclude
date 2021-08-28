@@ -23,7 +23,7 @@
 
                     <v-img
                     height="250"
-                    src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+                    v-bind:src="person.profilepic"
                     ></v-img>
 
                     <v-card-title>{{ person.name }}</v-card-title>
@@ -82,11 +82,15 @@ export default {
     data() {
         return {
             team: [
-                {name: 'Tom', company:"AIA", contactnum: "91234567", desc: "I specialize in saving plans", profilepic:"../assets/kind1.jpg"},
-                {name: 'Harry', company:"Standard Chartered", contactnum: "91234567", desc: "I love sharing about health insurance", profilepic:"../assets/kind2.jpg"},
-                {name: 'Gary', company:"AIA", contactnum: "91234567", desc: "I help people when they are treated unfairly", profilepic:"../assets/kind3.jpg"},
-                {name: 'Brandon', company:"Prudential", contactnum: "91234567", desc: "Contact me to get a headstart in your finances!", profilepic:"../assets/kind4.jpg"},
-                {name: 'Max', company:"AIA", contactnum: "91234567", desc: "Want to know the best techniques? Look no further", profilepic:"../assets/kind5.jpg"},
+                {name: 'Zane', company:"AIA", contactnum: "91234567", desc: "I specialize in saving plans", profilepic:"https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=731&q=80"},
+                {name: 'Harry', company:"Standard Chartered", contactnum: "91234567", desc: "I love sharing about health insurance", profilepic:"https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"},
+                {name: 'Gary', company:"AIA", contactnum: "91234567", desc: "I help people when they are treated unfairly", profilepic:"https://images.unsplash.com/photo-1561588951-583249cd5060?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"},
+                {name: 'Brandon', company:"Prudential", contactnum: "91234567", desc: "Contact me to get a headstart in your finances!", profilepic:"https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"},
+                {name: 'Melissa', company:"AIA", contactnum: "91234567", desc: "Want to know the best techniques? Look no further", profilepic:"https://images.unsplash.com/photo-1552162864-987ac51d1177?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"},
+                {name: 'Jessie', company:"AIA", contactnum: "91234567", desc: "Growing Your Retirement Dreams", profilepic:"https://images.unsplash.com/photo-1526080652727-5b77f74eacd2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1055&q=80"},
+                {name: 'Adeline', company:"AIA", contactnum: "91234567", desc: "Balanced Money * Balanced Life", profilepic:"https://images.unsplash.com/photo-1548142813-c348350df52b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=335&q=80"},
+                {name: 'Tim', company:"AIA", contactnum: "91234567", desc: "Building a better financial life", profilepic:"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"},
+                {name: 'Max', company:"AIA", contactnum: "91234567", desc: "Financial Dreams Delivered", profilepic:"https://images.unsplash.com/photo-1580639724250-5b465205a500?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=375&q=80"},
             ]
         }
     },
