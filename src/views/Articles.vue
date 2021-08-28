@@ -1,7 +1,6 @@
 <template>
     <div>
         <h1>Hello ek!</h1>
-        {{message}}
     </div>
 </template>
 
