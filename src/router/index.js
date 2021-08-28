@@ -42,6 +42,16 @@ const routes = [
     path: '/userform',
     name: 'UserForm',
     component: () => import('../views/Forms/User.vue')
+  },
+  {
+    path: '/financialadvisors',
+    name: 'FinancialAdvisors',
+    component: () => import('../views/FinancialAdvisors.vue')
+  },
+  {
+    path: '/',
+    name: 'Homepage',
+    component: () => import('../views/Homepage.vue')
   }
 ]
 

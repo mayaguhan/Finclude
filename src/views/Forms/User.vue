@@ -63,7 +63,7 @@
             </div>
 
             
-            <v-btn depressed color="#A300A1">
+            <v-btn @click="submitForm()" depressed color="#A300A1">
                 <span style="color: white">SUBMIT</span> 
             </v-btn>
             
@@ -72,6 +72,11 @@
 </template>
 
 <script>
+  import Vue from 'vue'
+  import VueRouter from 'vue-router'
+
+  Vue.use(VueRouter)
+
 export default {
     name: "UserForm",
     data() {
@@ -127,7 +132,13 @@ export default {
                 this.weeklyRecommended = (this.savingGoal / weeks).toFixed(2);
                 this.styleObject.display = "block";
             }
+        },
+        submitForm() {
+            // Function to create new user
+            
 
+            // If success, redirect
+            this.$router.push('/homepage');
         }
     },
     created() {
