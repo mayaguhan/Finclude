@@ -74,6 +74,7 @@
 <script>
   import Vue from 'vue'
   import VueRouter from 'vue-router'
+  
 
   Vue.use(VueRouter)
 
@@ -135,12 +136,8 @@ export default {
         },
         submitForm() {
             // Function to create new user
-            var loginCheck = window.sessionStorage;
-            loginCheck.setItem('login', 1);
-
-
-            console.log(loginCheck.login);
-
+            this.$store.commit("setUser", this.firstName);
+            this.$store.commit("setLogin", 1);
 
             // If success, redirect
             this.$router.push('/homepage');

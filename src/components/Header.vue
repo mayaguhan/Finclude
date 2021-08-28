@@ -19,6 +19,7 @@
 
       <v-spacer></v-spacer>
 
+      <span class="mr-3" style="font-weight: bold"> Welcome, {{user}}!</span>
       <router-link to="/about" id="textRouterLink" style="margin-right: 7px">About</router-link>
       <router-link to="/calculator" id="textRouterLink" style="margin-right: 7px">Calculator</router-link>
       <router-link to="/savings" id="textRouterLink">Savings</router-link>
@@ -28,6 +29,9 @@
 </template>
 
 <script>
+
+import { mapState } from 'vuex';
+
   export default {
     name: 'Header',
 
@@ -38,16 +42,21 @@
     },
     methods: {
         login() {
-          var loginCheck = window.sessionStorage;
-          console.log(loginCheck);
-          if (loginCheck.login == 1){
-            return true;
-          }
-          else{
-            return false;
-
-          }
+          // if (this.$store.state.login == 1){
+          //   // console.log("HELLO");
+          //   return true;
+          // }
+          // else{
+          //   return false;
+          // }
+          console.log(this.$store.state.login);
+          return this.$store.state.login;
         }
+    },
+    computed: {
+        ...mapState({
+            user: (state) =>state.user
+        })
     },
     created() {
       //
