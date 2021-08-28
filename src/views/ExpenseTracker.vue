@@ -1,12 +1,18 @@
 <template>
     <div class="text-center">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium nostrum, quos velit quo temporibus unde perspiciatis, accusamus deleniti soluta deserunt delectus omnis eligendi similique asperiores tempora quis odio quidem vitae.
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem, dolorem? Dignissimos, adipisci! Eius provident esse est soluta quia aliquid iure officiis facilis, quos at suscipit culpa ab commodi autem sequi.
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Et porro repellat, nulla esse impedit nostrum! Quia placeat, suscipit velit possimus tenetur sit ea assumenda saepe deleniti molestias unde ex quasi?
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia dicta ipsum nesciunt voluptates harum totam soluta rerum nihil corporis eveniet dolorem, quasi minus dolores dolor est velit iusto saepe quod.
-    <br>
 
-    <v-data-table :headers="headers" :items="desserts" :search="search" sort-by="date" class="elevation-1">
+    <v-btn-toggle v-model="toggle_exclusive" tile color="deep-purple dark-2" group>
+        <v-btn @click="toggleView('Transaction')">
+            <h3>Transaction</h3>
+        </v-btn>
+
+        <v-btn @click="toggleView('Dashboard')">
+            <h3>Dashboard</h3>
+        </v-btn>
+    </v-btn-toggle>
+
+    <div v-if="!dashboardView">
+    <v-data-table :headers="headers" :items="expenses" :search="search" sort-by="date" class="elevation-1">
         <template v-slot:top>
             <v-toolbar flat>
                 <v-card-title>
@@ -19,7 +25,7 @@
                 <v-dialog v-model="dialog" max-width="500px">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn color="purple darken-2" dark class="mb-2" v-bind="attrs" v-on="on">
-                            New Expense
+                            New Transaction
                         </v-btn>
                     </template>
                     <v-card>
@@ -30,8 +36,20 @@
                         <v-card-text>
                             <v-container>
                                 <v-row>
+                                    <v-btn-toggle v-model="toggle_exclusive2">
+                                        <v-btn color="success" @click="toggleTransaction('Income')">
+                                            <h4>Income</h4>
+                                        </v-btn>
+                                        
+                                        <v-btn color="error" @click="toggleTransaction('Expense')">
+                                            <h4>Expense</h4>
+                                        </v-btn>
+                                    </v-btn-toggle>
+                                </v-row>
+
+                                <v-row>
                                     <v-col>
-                                        <v-text-field  v-model="editedItem.name" label="Expense Name"></v-text-field>
+                                        <v-text-field  v-model="editedItem.name" label="Transaction Name"></v-text-field>
                                     </v-col>
                                 </v-row>
 
@@ -40,7 +58,7 @@
                                         <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40"
                                             transition="scale-transition" offset-y min-width="auto">
                                             <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field v-model="date" label="Expense Date" append-icon="mdi-calendar" 
+                                                <v-text-field v-model="date" label="Transaction Date" append-icon="mdi-calendar" 
                                                 readonly v-bind="attrs" v-on="on"></v-text-field>
                                             </template>
                                             <v-date-picker v-model="date" color="purple darken-2" @input="onDateChange"></v-date-picker>
@@ -50,19 +68,24 @@
 
                                 <v-row>
                                     <v-col>
-                                        <v-text-field v-model="editedItem.amount" label="Amount" type="number"></v-text-field>
+                                        <v-text-field v-model="editedItem.amount" label="Amount ($)" type="number"></v-text-field>
                                     </v-col>
                                 </v-row>
 
                                 <v-row>
-                                    <v-col>
+                                    <v-col v-if="!incomeView">
                                         <v-select v-model="editedItem.type" :items="expenseType" 
-                                        :menu-props="{ top: false, offsetY: true }" label="Expense Type">
+                                        :menu-props="{ top: false, offsetY: true }" label="Transaction Type">
                                         </v-select>
                                     </v-col>
 
-                                    
+                                    <v-col v-else>
+                                        <v-select v-model="editedItem.type" :items="incomeType" 
+                                        :menu-props="{ top: false, offsetY: true }" label="Transaction Type">
+                                        </v-select>
+                                    </v-col>
                                 </v-row>
+
                             </v-container>
                         </v-card-text>
 
@@ -78,6 +101,7 @@
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
+
                 <v-dialog v-model="dialogDelete" max-width="500px">
                 <v-card>
                     <v-card-title class="text-h5">Are you sure you want to delete this expense?</v-card-title>
@@ -93,12 +117,18 @@
         </template>
 
         <template v-slot:[`item.actions`]="{ item }">
-            <v-icon small class="mr-2" @click="editItem(item)">
+            <v-icon small class="mr-2" @click="editItem(item)" color="purple">
                 mdi-pencil
             </v-icon>
-            <v-icon small @click="deleteItem(item)">
+            <v-icon small @click="deleteItem(item)" color="red">
                 mdi-delete
             </v-icon>
+        </template>
+
+        <template v-slot:[`item.transactionType`]="{ item }">
+            <v-chip :color="getColor(item.transactionType)" dark>
+                {{ item.transactionType }}
+            </v-chip>
         </template>
 
         <template v-slot:no-data>
@@ -107,6 +137,20 @@
             </v-btn>
         </template>
     </v-data-table>
+
+
+    </div >
+
+    <div v-else>
+        <!-- Dashboard Code -->
+
+
+
+
+
+
+    </div>
+
     </div>
 </template>
 
@@ -116,24 +160,32 @@
         data: () => ({
         // date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         date: '',
+        toggle_exclusive: 0,
+        toggle_exclusive2: 0,
+
         menu: false,
         modal: false,
         menu2: false,
+        transactionType: "Expense",
+
+        dashboardView: false,
+        incomeView: true,
 
         expenseType: ['Food', 'Transportation', 'Household', 'Education', 'Beauty', 'Health', 'Gift', 'Other'],
+        incomeType: ['Salary', 'Allowance', 'Bonus', 'Petty Cash', 'Other'],
 
         dialog: false,
         dialogDelete: false,
         search: '',
         headers: [
-            { text: 'Expense Name', align: 'start', sortable: false, value: 'name'},
+            { text: 'Transaction Name', align: 'start', sortable: false, value: 'name'},
             { text: 'Date', value: 'date', filterable: false, sortable: true},
             { text: 'Amount', value: 'amount', filterable: false},
-            { text: 'Expense Type', value: 'type', filterable: false},
-            // { text: 'Remarks', value: 'remarks', filterable: false},
+            { text: 'Transaction Category', value: 'type', filterable: false},
+            { text: 'Transaction Type', value: 'transactionType', filterable: false},
             { text: 'Actions', value: 'actions', sortable: false },
         ],
-        desserts: [],
+        expenses: [],
         editedIndex: -1,
 
         editedItem: {
@@ -141,20 +193,21 @@
             date: 0,
             amount: '',
             type: "",
-            remarks: "",
+            transactionType: '',
+
         },
         defaultItem: {
             name: '',
             date: 0,
             amount: 0,
             type: 0,
-            remarks: 0,
+            transactionType: '',
         },
         }),
 
         computed: {
             formTitle () {
-                return this.editedIndex === -1 ? 'New Expense' : 'Edit Expense'
+                return this.editedIndex === -1 ? 'New Transaction' : 'Edit Transaction'
             },
         },
 
@@ -178,96 +231,134 @@
                 this.menu2 = false
             },
 
+            toggleView(page) {
+                if (page == "Transaction") {
+                    this.dashboardView = false;
+                } else {
+                    this.dashboardView = true;
+                }
+            },
+
+            toggleTransaction(type) {
+                this.editedItem.transactionType = type
+                if (type == "Expense") {
+                    this.incomeView = false;
+                } else {
+                    this.incomeView = true;
+                }
+            },
+
+            getColor(transactionType) {
+                if (transactionType == "Expense") return 'red'
+                else return 'green'
+            },
+
             initialize () {
-                //Retrieve Data
-                this.desserts = [
+                //Retrieve Data this.expense
+
+
+
+
+
+
+
+                this.expenses = [ //Remove after retrieving from DB
                 {
                     name: 'Frozen Yogurt',
                     date: "2021-08-20",
                     amount: 6.00,
                     type: "Food",
-                    remarks: "",
+                    transactionType: "Expense",
                 },
                 {
                     name: 'Ice cream sandwich',
                     date: "2021-08-21",
                     amount: 8.00,
                     type: "Food",
-                    remarks: "",
+                    transactionType: "Expense",
                 },
                 {
                     name: 'Eclair',
                     date: "2021-08-23",
                     amount: 4.00,
                     type: "Food",
-                    remarks: "",
+                    transactionType: "Expense",
                 },
                 {
                     name: 'Cupcake',
                     date: "2021-08-24",
                     amount: 5.00,
                     type: "Food",
-                    remarks: "",
+                    transactionType: "Expense",
                 },
                 {
                     name: 'Gingerbread',
                     date: "2021-08-20",
                     amount: 3.00,
                     type: "Food",
-                    remarks: "",
+                    transactionType: "Expense",
                 },
                 {
                     name: 'Jelly bean',
                     date: "2021-08-20",
                     amount: 6.00,
                     type: "Food",
-                    remarks: "",
+                    transactionType: "Expense",
                 },
                 {
                     name: 'Lollipop',
                     date: "2021-08-20",
                     amount: 10.00,
                     type: "Food",
-                    remarks: "",
+                    transactionType: "Expense",
                 },
                 {
                     name: 'Honeycomb',
                     date: "2021-08-20",
                     amount: 16.00,
                     type: "Food",
-                    remarks: "",
+                    transactionType: "Expense",
                 },
                 {
                     name: 'Donut',
                     date: "2021-08-20",
                     amount: 4.00,
                     type: "Food",
-                    remarks: "",
+                    transactionType: "Expense",
                 },
                 {
                     name: 'KitKat',
                     date: "2021-08-20",
                     amount: 3.00,
                     type: "Food",
-                    remarks: "",
+                    transactionType: "Expense",
+                },
+                {
+                    name: 'Win 4D',
+                    date: "2021-08-20",
+                    amount: 300,
+                    type: "Salary",
+                    transactionType: "Income",
                 },
                 ]
+
+
             },
 
             editItem (item) {
-                this.editedIndex = this.desserts.indexOf(item)
+                this.editedIndex = this.expenses.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true
             },
 
             deleteItem (item) {
-                this.editedIndex = this.desserts.indexOf(item)
+                this.editedIndex = this.expenses.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.dialogDelete = true
             },
 
             deleteItemConfirm () {
-                this.desserts.splice(this.editedIndex, 1)
+                this.expenses.splice(this.editedIndex, 1)
                 this.closeDelete()
                 //Delete from DB (D)
 
@@ -294,7 +385,7 @@
 
             save () {
                 if (this.editedIndex > -1) {
-                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                    Object.assign(this.expenses[this.editedIndex], this.editedItem)
                     // Update DB (U)
 
 
@@ -303,7 +394,7 @@
                 } else {
                     
                     //Insert into DB (C)
-                    this.desserts.push(this.editedItem)
+                    this.expenses.push(this.editedItem)
 
 
                 }
@@ -312,7 +403,3 @@
         },
     }
 </script>
-
-<style>
-
-</style>
