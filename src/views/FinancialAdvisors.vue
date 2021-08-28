@@ -82,11 +82,11 @@ export default {
     data() {
         return {
             team: [
-                {name: 'Tom', company:"AIA", contactnum: "91234567", desc: "I specialize in saving plans"},
-                {name: 'Harry', company:"Standard Chartered", contactnum: "91234567", desc: "I love sharing about health insurance"},
-                {name: 'Gary', company:"AIA", contactnum: "91234567", desc: "I help people when they are treated unfairly"},
-                {name: 'Brandon', company:"Prudential", contactnum: "91234567", desc: "Contact me to get a headstart in your finances!"},
-                {name: 'Max', company:"AIA", contactnum: "91234567", desc: "Want to know the best techniques? Look no further"},
+                {name: 'Tom', company:"AIA", contactnum: "91234567", desc: "I specialize in saving plans", profilepic:"../assets/kind1.jpg"},
+                {name: 'Harry', company:"Standard Chartered", contactnum: "91234567", desc: "I love sharing about health insurance", profilepic:"../assets/kind2.jpg"},
+                {name: 'Gary', company:"AIA", contactnum: "91234567", desc: "I help people when they are treated unfairly", profilepic:"../assets/kind3.jpg"},
+                {name: 'Brandon', company:"Prudential", contactnum: "91234567", desc: "Contact me to get a headstart in your finances!", profilepic:"../assets/kind4.jpg"},
+                {name: 'Max', company:"AIA", contactnum: "91234567", desc: "Want to know the best techniques? Look no further", profilepic:"../assets/kind5.jpg"},
             ]
         }
     },
