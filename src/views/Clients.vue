@@ -23,13 +23,14 @@
 
                     <v-img
                     height="250"
-                    v-bind:src="person.avatar"
+                    v-bind:src="person.imgUrl"
                     >
                     </v-img>
 
                     <v-card-title>{{ person.firstName }}</v-card-title>
 
                     <v-card-text>
+                        <div class="text-subtitle-1 text-left">Bio: <b>"{{ person.bio }}"</b></div>
                         <div class="text-subtitle-1 text-left">Monthly Salary: ${{ person.salary }}</div>
                         <div class="text-subtitle-1 text-left">Monthly Expenditure: ${{ person.monExpenditure }}</div>
                         <div class="text-subtitle-1 text-left">Goal: {{ person.goal }} (Within {{ person.yearsToGoal }} Years)</div>
@@ -48,14 +49,14 @@
                             color="primary"
                             v-bind="attrs"
                             v-on="on"
-                        >Contact</v-btn>
+                        >Details</v-btn>
                         </template>
                         <template v-slot:default="dialog">
                         <v-card>
                             <v-toolbar
                             color="primary"
                             dark
-                            >{{ person.name }}'s Contact Information</v-toolbar>
+                            >{{ person.name }}'s Details</v-toolbar>
                             <v-card-text>
                             <div style="padding-top:40px">Contact Number: <b>{{ person.contactnum }}</b></div>
                             <div>Email: <b>{{ person.contactnum }}</b></div>
@@ -80,128 +81,13 @@
 </template>
 
 <script>
+
 export default {
-    name: "Financial Advisors",
+    name: "Clients",
     data() {
         return {
             team: [
-                {prefCurrency: "SGD",
-                monExpenditure: 400,
-                bio: "it's hard to get by...",
-                lastName: "Ang",
-                salary: 1200,
-                goal: 100000,
-                firstName: "Mike",
-                lang: "EN",
-                yearsToGoal: 20,
-                advisorId: "123456",
-                id: "123458",
-                monSavings: 600,
-                avatar:"https://images.unsplash.com/photo-1520560868530-7877729f8942?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"},
-                {prefCurrency: "SGD",
-                monExpenditure: 400,
-                bio: "it's hard to get by...",
-                lastName: "Ang",
-                salary: 1200,
-                goal: 100000,
-                firstName: "Evan",
-                lang: "EN",
-                yearsToGoal: 20,
-                advisorId: "123456",
-                id: "123458",
-                monSavings: 600,
-                avatar:"https://images.unsplash.com/photo-1489980478712-2ab535aa775f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"},
-                {prefCurrency: "SGD",
-                monExpenditure: 400,
-                bio: "it's hard to get by...",
-                lastName: "Ang",
-                salary: 1200,
-                goal: 100000,
-                firstName: "Chris",
-                lang: "EN",
-                yearsToGoal: 20,
-                advisorId: "123456",
-                id: "123458",
-                monSavings: 600,
-                avatar:"https://images.unsplash.com/photo-1577880216142-8549e9488dad?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"},
-                {prefCurrency: "SGD",
-                monExpenditure: 400,
-                bio: "it's hard to get by...",
-                lastName: "Ang",
-                salary: 1200,
-                goal: 100000,
-                firstName: "Sharon",
-                lang: "EN",
-                yearsToGoal: 20,
-                advisorId: "123456",
-                id: "123458",
-                monSavings: 600,
-                avatar:"https://images.unsplash.com/photo-1527423460268-0b3795a97e7f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"},
-                {prefCurrency: "SGD",
-                monExpenditure: 400,
-                bio: "it's hard to get by...",
-                lastName: "Ang",
-                salary: 1200,
-                goal: 100000,
-                firstName: "Nicole",
-                lang: "EN",
-                yearsToGoal: 20,
-                advisorId: "123456",
-                id: "123458",
-                monSavings: 600,
-                avatar:"https://images.unsplash.com/photo-1610130383669-95917c70ca20?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"},
-                {prefCurrency: "SGD",
-                monExpenditure: 400,
-                bio: "it's hard to get by...",
-                lastName: "Ang",
-                salary: 1200,
-                goal: 100000,
-                firstName: "Karen",
-                lang: "EN",
-                yearsToGoal: 20,
-                advisorId: "123456",
-                id: "123458",
-                monSavings: 600,
-                avatar:"https://images.unsplash.com/photo-1525077769455-287cd9d231a6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80"},
-                {prefCurrency: "SGD",
-                monExpenditure: 400,
-                bio: "it's hard to get by...",
-                lastName: "Ang",
-                salary: 1200,
-                goal: 100000,
-                firstName: "Kevin",
-                lang: "EN",
-                yearsToGoal: 20,
-                advisorId: "123456",
-                id: "123458",
-                monSavings: 600,
-                avatar:"https://images.unsplash.com/photo-1541855492-581f618f69a0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"},
-                {prefCurrency: "SGD",
-                monExpenditure: 400,
-                bio: "it's hard to get by...",
-                lastName: "Ang",
-                salary: 1200,
-                goal: 100000,
-                firstName: "Jason",
-                lang: "EN",
-                yearsToGoal: 20,
-                advisorId: "123456",
-                id: "123458",
-                monSavings: 600,
-                avatar:"https://images.unsplash.com/photo-1463453091185-61582044d556?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"},
-                {prefCurrency: "SGD",
-                monExpenditure: 400,
-                bio: "it's hard to get by...",
-                lastName: "Ang",
-                salary: 1200,
-                goal: 100000,
-                firstName: "Fred",
-                lang: "EN",
-                yearsToGoal: 20,
-                advisorId: "123456",
-                id: "123458",
-                monSavings: 600,
-                avatar:"https://images.unsplash.com/photo-1480406537807-00c0914e8d40?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"},
+                
             ]
         }
     },
@@ -211,8 +97,29 @@ export default {
         }
     },
     created() {
-        //
-    }
+            const axios = require('axios');
+            axios.get('https://vir9lpv010.execute-api.us-east-1.amazonaws.com/production/users')
+                .then((response) => {
+                    //Success
+                    this.expenses = response.data.Items;
+                    console.log(response.data.Items);
+                    let clientArray = response.data.Items;
+                    for (let index = 0; index < clientArray.length; index++) {
+                        const clientData = clientArray[index];
+                        this.team.push(clientData);
+                    }
+                })
+
+                .catch(function (error) {
+                    //error
+                    console.log(error);
+                })
+
+                .then(function () {
+                    // console.log(response);
+                    // console.log("GET Request complete")
+                });
+        },
 
 }
 </script>
