@@ -42,8 +42,8 @@
                                             <h4>Income</h4>
                                         </v-btn>
                                         
-                                        <v-btn color="error" @click="toggleTransaction('Expense')">
-                                            <h4>Expense</h4>
+                                        <v-btn color="error" @click="toggleTransaction('Expenses')">
+                                            <h4>Expenses</h4>
                                         </v-btn>
                                     </v-btn-toggle>
                                 </v-row>
@@ -75,14 +75,14 @@
 
                                 <v-row>
                                     <v-col v-if="!incomeView">
-                                        <v-select v-model="editedItem.type" :items="expenseType" 
-                                        :menu-props="{ top: false, offsetY: true }" label="Transaction Type">
+                                        <v-select v-model="editedItem.category" :items="expenseType" 
+                                        :menu-props="{ top: false, offsetY: true }" label="Transaction Category">
                                         </v-select>
                                     </v-col>
 
                                     <v-col v-else>
-                                        <v-select v-model="editedItem.type" :items="incomeType" 
-                                        :menu-props="{ top: false, offsetY: true }" label="Transaction Type">
+                                        <v-select v-model="editedItem.category" :items="incomeType" 
+                                        :menu-props="{ top: false, offsetY: true }" label="Transaction Category">
                                         </v-select>
                                     </v-col>
                                 </v-row>
@@ -126,9 +126,9 @@
             </v-icon>
         </template>
 
-        <template v-slot:[`item.transactionType`]="{ item }">
-            <v-chip :color="getColor(item.transactionType)" dark>
-                {{ item.transactionType }}
+        <template v-slot:[`item.type`]="{ item }">
+            <v-chip :color="getColor(item.type)" dark>
+                {{ item.type }}
             </v-chip>
         </template>
 
@@ -148,7 +148,7 @@
                 <h1 style="text-align: center">My Expenses </h1>
                 <v-row class="mt-6">
                     <v-col style="padding-right: 50px">
-                        <ChartDoughnut />
+                        <ChartDoughnut :expenses="expenses" />
                     </v-col>
                     <v-col style="padding-left: 50px">
                         <ChartLine />
@@ -185,10 +185,13 @@
 
 
 <script>
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import axios from 'axios'
 
+Vue.use(VueRouter)
 import ChartDoughnut from "@/components/ChartDoughnut";
 import ChartLine from "@/components/ChartLine";
-
 
     export default {
         components: {
@@ -204,7 +207,8 @@ import ChartLine from "@/components/ChartLine";
         menu: false,
         modal: false,
         menu2: false,
-        transactionType: "Expense",
+        type: "Expense",
+        userId: "123450",
 
         dashboardView: false,
         incomeView: true,
@@ -219,27 +223,29 @@ import ChartLine from "@/components/ChartLine";
             { text: 'Transaction Name', align: 'start', sortable: false, value: 'name'},
             { text: 'Date', value: 'date', filterable: false, sortable: true},
             { text: 'Amount', value: 'amount', filterable: false},
-            { text: 'Transaction Category', value: 'type', filterable: false},
-            { text: 'Transaction Type', value: 'transactionType', filterable: false},
+            { text: 'Transaction Category', value: 'category', filterable: false},
+            { text: 'Transaction Type', value: 'type', filterable: false},
             { text: 'Actions', value: 'actions', sortable: false },
         ],
         expenses: [],
         editedIndex: -1,
 
         editedItem: {
-            name: '',
-            date: 0,
-            amount: '',
-            type: "",
-            transactionType: '',
-
-        },
-        defaultItem: {
+            userId: 0,
             name: '',
             date: 0,
             amount: 0,
-            type: 0,
-            transactionType: '',
+            category: '',
+            type: '',
+
+        },
+        defaultItem: {
+            userId: 0,
+            name: '',
+            date: 0,
+            amount: 0,
+            category: '',
+            type: '',
         },
         }),
 
@@ -258,8 +264,24 @@ import ChartLine from "@/components/ChartLine";
             },
         },
 
-        created () {
-            this.initialize()
+        created() {
+            const axios = require('axios');
+            axios.get('https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses/123450')
+                .then((response) => {
+                    //Success
+                    this.expenses = response.data.Items;
+                    // console.log(response.data.Items);
+                })
+
+                .catch(function (error) {
+                    //error
+                    console.log(error);
+                })
+
+                .then(function () {
+                    // console.log(response);
+                    // console.log("GET Request complete")
+                });
         },
 
         methods: {
@@ -278,109 +300,17 @@ import ChartLine from "@/components/ChartLine";
             },
 
             toggleTransaction(type) {
-                this.editedItem.transactionType = type
-                if (type == "Expense") {
+                this.editedItem.type = type
+                if (type == "Expenses") {
                     this.incomeView = false;
                 } else {
                     this.incomeView = true;
                 }
             },
 
-            getColor(transactionType) {
-                if (transactionType == "Expense") return 'red'
+            getColor(type) {
+                if (type == "Expenses") return 'red'
                 else return 'green'
-            },
-
-            initialize () {
-                //Retrieve Data this.expense
-
-
-
-
-
-
-
-                this.expenses = [ //Remove after retrieving from DB
-                {
-                    name: 'Frozen Yogurt',
-                    date: "2021-08-20",
-                    amount: 6.00,
-                    type: "Food",
-                    transactionType: "Expense",
-                },
-                {
-                    name: 'Ice cream sandwich',
-                    date: "2021-08-21",
-                    amount: 8.00,
-                    type: "Food",
-                    transactionType: "Expense",
-                },
-                {
-                    name: 'Eclair',
-                    date: "2021-08-23",
-                    amount: 4.00,
-                    type: "Food",
-                    transactionType: "Expense",
-                },
-                {
-                    name: 'Cupcake',
-                    date: "2021-08-24",
-                    amount: 5.00,
-                    type: "Food",
-                    transactionType: "Expense",
-                },
-                {
-                    name: 'Gingerbread',
-                    date: "2021-08-20",
-                    amount: 3.00,
-                    type: "Food",
-                    transactionType: "Expense",
-                },
-                {
-                    name: 'Jelly bean',
-                    date: "2021-08-20",
-                    amount: 6.00,
-                    type: "Food",
-                    transactionType: "Expense",
-                },
-                {
-                    name: 'Lollipop',
-                    date: "2021-08-20",
-                    amount: 10.00,
-                    type: "Food",
-                    transactionType: "Expense",
-                },
-                {
-                    name: 'Honeycomb',
-                    date: "2021-08-20",
-                    amount: 16.00,
-                    type: "Food",
-                    transactionType: "Expense",
-                },
-                {
-                    name: 'Donut',
-                    date: "2021-08-20",
-                    amount: 4.00,
-                    type: "Food",
-                    transactionType: "Expense",
-                },
-                {
-                    name: 'KitKat',
-                    date: "2021-08-20",
-                    amount: 3.00,
-                    type: "Food",
-                    transactionType: "Expense",
-                },
-                {
-                    name: 'Win 4D',
-                    date: "2021-08-20",
-                    amount: 300,
-                    type: "Salary",
-                    transactionType: "Income",
-                },
-                ]
-
-
             },
 
             editItem (item) {
@@ -398,11 +328,12 @@ import ChartLine from "@/components/ChartLine";
             deleteItemConfirm () {
                 this.expenses.splice(this.editedIndex, 1)
                 this.closeDelete()
-                //Delete from DB (D)
 
-
-
-
+                //Delete Expense
+                axios.delete(`https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses?userId=${this.userId}&name=${this.editedItem.name}`)
+                .then(response => {
+                    console.log(response);
+                })
             },
 
             close () {
@@ -424,24 +355,26 @@ import ChartLine from "@/components/ChartLine";
             save () {
                 if (this.editedIndex > -1) {
                     Object.assign(this.expenses[this.editedIndex], this.editedItem)
-                    // Update DB (U)
-
-
-
+                    
+                    console.log(this.editedItem);
+                    //Update
 
                 } else {
-                    
                     //Insert into DB (C)
-                    this.expenses.push(this.editedItem)
+                    this.editedItem.userId = this.userId;
+                    this.expenses.push(this.editedItem);
+                    console.log(this.editedItem);
 
-
+                    axios.put("https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses", this.editedItem)
+                    .then(response => {
+                        console.log(response);
+                    })
                 }
                 this.close()
             },
         },
     }
 </script>
-
 
 <style lang='scss' scoped>
 .grid {

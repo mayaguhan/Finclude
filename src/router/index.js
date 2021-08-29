@@ -76,6 +76,12 @@ const routes = [
     name: 'Report',
     component: () => import('../views/Forms/Report.vue')
   }
+  {
+    path: '/clients',
+    name: 'Clients',
+    component: () => import('../views/Clients.vue')
+  },
+
 ]
 
 const router = new VueRouter({
