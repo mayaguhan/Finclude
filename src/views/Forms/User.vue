@@ -168,6 +168,7 @@ export default {
                 "yearsToGoal": this.yearsToGoal,
                 "advisorId": "000000",
                 "monSavings": this.monSavings,
+                "imgUrl": "https://tinmansachs.s3.amazonaws.com/DefaultClient.jpg",
                 "tags": "newUser"
             }
 

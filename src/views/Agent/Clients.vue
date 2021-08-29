@@ -58,7 +58,30 @@
                             dark
                             >{{ person.firstName }}'s Expenditure Details</v-toolbar>
                             <v-card-text>
-                            <div style="padding-top:40px" v-for="(value, key) in person.expObject" :key=key>{{ key }}: <b>${{ value.toFixed(2) }}</b></div>
+                                <div id="test">
+                                    <table class="pt-4">
+                                        <tr style="color: #580057">
+                                            <td>
+                                               <b>Title</b> 
+                                            </td>
+                                            <td>
+                                               <b>Currency ($)</b> 
+                                            </td>
+                                        </tr>
+
+                                        <tr v-for="(value, key) in person.expObject" :key=key style="text-align: left">
+                                            <th class="pr-3">
+                                                {{ key }}
+                                            </th>
+                                            <td>
+                                                {{ value.toFixed(2) }}
+                                            </td>
+                                        </tr>
+                                            <!-- {{ key }}: <b>${{ value.toFixed(2) }}</b> -->
+                                    </table>
+                                </div>
+
+
                             </v-card-text>
                             <v-card-actions class="justify-end">
                             <v-btn
@@ -178,4 +201,22 @@ export default {
 
 <style>
 
+#test {
+    width:100%;
+    height:100%;
+}
+table {
+    margin: 0 auto; /* or margin: 0 auto 0 auto */
+    border: none;
+    
+}
+
+tr:nth-child(even) {
+    background-color: #f7e1fa;
+    border: 1px solid black;
+}
+
+td, th {
+    border: none;
+}
 </style>

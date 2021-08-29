@@ -149,6 +149,7 @@ export default {
                 "teleHandle": this.telegramHandle,
                 "contactNumber": this.contactNumber,
                 "email": this.email,
+                "imgUrl": "https://tinmansachs.s3.amazonaws.com/sofia-mQtcrK22CN8-unsplash.jpg",
                 "languages": this.selectedLang.toString(),
                 "tags": "newAgent"
             }

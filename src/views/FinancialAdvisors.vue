@@ -77,8 +77,12 @@
                             dark
                             >{{ person.firstName }}'s Contact Information</v-toolbar>
                             <v-card-text>
-                            <div style="padding-top:40px">Contact Number: <b>{{ person.contactNum }}</b></div>
-                            <div>Telegram Handle: <b>{{ person.teleHandle }}</b></div>
+                                <div style="padding-top:40px">
+                                    Contact Number: <b>{{ person.contactNum }}</b>
+                                </div>
+                                <div>
+                                    Telegram Handle: <b>{{ person.teleHandle }}</b>
+                                </div>
                             </v-card-text>
                             <v-card-actions class="justify-end">
                             <v-btn

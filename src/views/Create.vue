@@ -55,18 +55,6 @@
                 </v-row>
             </v-col>
         </v-row>
-
-        <!-- <v-row class="mt-4">
-            <v-col>
-                <div style="margin: auto; text-align: center" class="blue lighten-5 typewriter">
-                    <span style="font-size: 100px">About Us</span>
-                    <div class="mt-2">
-                       <h2> <span style="font-style: italic"></span> Finclude is a</h2> 
-                    </div>
-                </div>
-
-            </v-col>
-        </v-row> -->
     </v-container>
 </template>
 
