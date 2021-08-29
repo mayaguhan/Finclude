@@ -3,10 +3,8 @@
         <h1>Let's Get Started!</h1>
         <v-form
             ref="form"
-            v-model="valid"
-            lazy-validation
-            class="mt-3">
-
+            class="mt-3"
+        >
             <v-row class="mb-1">
                 <v-col>
                     Choose Your Language

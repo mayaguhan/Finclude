@@ -66,12 +66,22 @@ const routes = [
     name: 'Articles',
     component: () => import('../views/Articles.vue')
   },
-  
   {
     path: '/expense',
     name: 'Expense',
     component: () => import('../views/ExpenseTracker.vue')
-  }
+  },
+  {
+    path: '/report',
+    name: 'Report',
+    component: () => import('../views/Forms/Report.vue')
+  },
+  {
+    path: '/clients',
+    name: 'Clients',
+    component: () => import('../views/Clients.vue')
+  },
+
 ]
 
 const router = new VueRouter({

@@ -28,8 +28,8 @@
             <h1 :style="styleObjTitle">Let's Get Started....</h1>
         </div>
         <v-row id="restFadeIn" @mouseover="showTitle()">
-            <v-col>
-                <img class="main_img" src="../../public/assets/amy-hirschi-JaoVGh5aJ3E-unsplash.jpg" style="height: 500px; border-radius: 10px">
+            <v-col style=" text-align: center; margin: auto">
+                <img class="main_img" src="../../public/assets/amy-hirschi-JaoVGh5aJ3E-unsplash.jpg" style="height: 500px; border-radius: 10px;">
             </v-col>
             <v-col>
                 <v-row id="user">
