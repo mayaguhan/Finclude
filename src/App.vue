@@ -6,21 +6,33 @@
     <div>
       <router-view></router-view>
     </div>
+    <div class="footer">
+      <Footer />
+    </div>
   </v-app>
 
 </template>
 
 <script>
 import Header from "./components/Header.vue"
+import Footer from "./components/Footer.vue"
 
 export default {
   components: {
-    Header
+    Header,
+    Footer
   }
 }
 </script>
 
 <style>
+
+.footer {
+  text-align: center;
+    clear: both;
+    position: relative;
+    bottom: 0;
+}
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

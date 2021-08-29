@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state:{
         login: 0,
-        counter: 0,
+        agent: 0,
         user: "Guest"
 
     },
@@ -18,6 +18,9 @@ export default new Vuex.Store({
         },
         setUser(state, payload){
             state.user = payload;
+        },
+        setAgent(state, payload){
+            state.agent = payload;
         }
     },
     actions: {},

@@ -31,7 +31,7 @@
                 </v-col>
                 <v-col>
                     Select Your Company
-                    <v-select v-model="chosenCompany" label="Company" outlined dense @change="updateCompany()" :items="companyList"></v-select>
+                    <v-select v-model="chosenCompany" label="Company" outlined dense :items="companyList"></v-select>
                 </v-col>
             </v-row>
 
@@ -57,7 +57,19 @@
                     <v-text-field v-model="email" outlined dense required placeholder="example@gmail.com"></v-text-field>
                 </v-col>
             </v-row>
+
             <v-row>
+                <v-col>
+                    Telegram Handle
+                    <v-text-field v-model="telegramHandle" placeholder="Telegram ID" outlined dense required></v-text-field>
+                </v-col>
+                <v-col>
+                    LinkedIn URL
+                    <v-text-field v-model="linkedIn" placeholder="LinkedIn URL" outlined dense required></v-text-field>
+                </v-col>
+            </v-row>
+
+            <v-row class="mt-1 mb-1">
                 <v-col
                     cols="12"
                 >
@@ -82,6 +94,7 @@
 <script>
   import Vue from 'vue'
   import VueRouter from 'vue-router'
+  import axios from 'axios'
 
   Vue.use(VueRouter)
 
@@ -114,23 +127,47 @@ export default {
                 color: "#5D35E5",
                 display: "none"
             },
-            description: ""
+            description: "",
+            telegramHandle: "",
+            linkedIn: ""
 
         }
     },
     methods: {
         submitForm() {
             // Function to create new user
-            var loginCheck = window.sessionStorage;
-            loginCheck.setItem('login', 1);
+
+            var id = Math.floor((Math.random()*1000000)+1).toString();
+
+            var proBonoObj = {
+                "id" : id,
+                "firstName": this.firstName,
+                "lastName": this.lastName,
+                "rating": 0,
+                "experience": this.description,
+                "linkedinUrl": this.linkedIn,
+                "teleHandle": this.telegramHandle,
+                "contactNumber": this.contactNumber,
+                "email": this.email,
+                "languages": this.selectedLang.toString(),
+                "tags": "newAgent"
+            }
+
+            axios.put("https://sg7f8ajqok.execute-api.us-east-1.amazonaws.com/production/agents", proBonoObj)
+                .then(response => {
+                    console.log(response);
+                })
 
 
-            console.log(loginCheck.login);
-
+            // Update vuex store
+            this.$store.commit("setUser", this.firstName);
+            this.$store.commit("setAgent", 1);
+            this.$store.commit("setLogin", 1);
+            
 
             // If success, redirect
             this.$router.push('/homepage');
-        },
+        }
     },
     computed: {
         //
