@@ -59,7 +59,7 @@ import { mapState } from 'vuex';
     },
     methods: {
         login() {
-          console.log(this.$store.state.login);
+          // console.log(this.$store.state.login);
           return this.$store.state.login;
         },
         logout() {

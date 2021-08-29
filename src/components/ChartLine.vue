@@ -70,24 +70,29 @@ export default {
         let leftoverDay = [];
     
         for (let expense in this.chartExpense) {
-          if (this.chartExpense[expense].type == "Expenses") { //Expense
-            this.totalExpense += parseFloat(this.chartExpense[expense].amount);
+          if ((this.chartExpense[expense].date.split("-")[1] == (new Date().getMonth() + 1))
+          &&  (this.chartExpense[expense].date.split("-")[0] == (new Date().getFullYear()))) {
+            
+            leftoverValue.push(leftoverAmt);
+            leftoverDay.push(this.chartExpense[expense].date.split("-")[2]);
 
-            if (this.expenseData[this.chartExpense[expense].category]) { //Category exists
-              this.expenseData[this.chartExpense[expense].category] += parseFloat(this.chartExpense[expense].amount);
-            } else { //Category does not exist
-              this.expenseData[this.chartExpense[expense].category] = 0
-              this.expenseData[this.chartExpense[expense].category] += parseFloat(this.chartExpense[expense].amount);
+            if (this.chartExpense[expense].type == "Expenses") { //Expense
+              this.totalExpense += parseFloat(this.chartExpense[expense].amount);
+
+              if (this.expenseData[this.chartExpense[expense].category]) { //Category exists
+                this.expenseData[this.chartExpense[expense].category] += parseFloat(this.chartExpense[expense].amount);
+              } else { //Category does not exist
+                this.expenseData[this.chartExpense[expense].category] = 0
+                this.expenseData[this.chartExpense[expense].category] += parseFloat(this.chartExpense[expense].amount);
+              }
+              leftoverAmt -= parseFloat(this.chartExpense[expense].amount);
+
+            } else { //Income
+              this.totalIncome += parseFloat(this.chartExpense[expense].amount);
+              leftoverAmt += parseFloat(this.chartExpense[expense].amount);
             }
-            leftoverAmt -= parseFloat(this.chartExpense[expense].amount);
 
-          } else { //Income
-            this.totalIncome += parseFloat(this.chartExpense[expense].amount);
-            leftoverAmt += parseFloat(this.chartExpense[expense].amount);
           }
-
-          leftoverValue.push(leftoverAmt);
-          leftoverDay.push(this.chartExpense[expense].date.split("-")[2]);
         }
         console.log(this.chartExpense);
         console.log("Final Leftover: ", leftoverAmt);

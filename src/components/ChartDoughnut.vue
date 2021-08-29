@@ -29,17 +29,20 @@ export default {
   mounted() {
     
     for (let expense in this.chartExpense) {
-      if (this.chartExpense[expense].type == "Expenses") {
-        this.totalExpense += parseFloat(this.chartExpense[expense].amount);
+      if ((this.chartExpense[expense].date.split("-")[1] == (new Date().getMonth() + 1))
+      &&  (this.chartExpense[expense].date.split("-")[0] == (new Date().getFullYear()))) {
+        if (this.chartExpense[expense].type == "Expenses") {
+          this.totalExpense += parseFloat(this.chartExpense[expense].amount);
 
-        if (this.expenseData[this.chartExpense[expense].category]) { //Category exists
-          this.expenseData[this.chartExpense[expense].category] += parseFloat(this.chartExpense[expense].amount);
-        } else { //Category does not exist
-          this.expenseData[this.chartExpense[expense].category] = 0
-          this.expenseData[this.chartExpense[expense].category] += parseFloat(this.chartExpense[expense].amount);
+          if (this.expenseData[this.chartExpense[expense].category]) { //Category exists
+            this.expenseData[this.chartExpense[expense].category] += parseFloat(this.chartExpense[expense].amount);
+          } else { //Category does not exist
+            this.expenseData[this.chartExpense[expense].category] = 0
+            this.expenseData[this.chartExpense[expense].category] += parseFloat(this.chartExpense[expense].amount);
+          }
+        } else {
+          this.totalIncome += parseFloat(this.chartExpense[expense].amount);
         }
-      } else {
-        this.totalIncome += parseFloat(this.chartExpense[expense].amount);
       }
     }
     let chartLabel = [];
@@ -62,8 +65,8 @@ export default {
       this.chartData = {
         datasets: [
           {
-            backgroundColor: ["#f36e60", "#ffdb3b", "#185190"],
-            hoverBackgroundColor: ["#fbd2cd", "#fef5c9", "#d1e3f7"],
+            backgroundColor: ["#FF0000", "#FF7300", "#FFEC00", "#52D726", "#7CDDDD", "#007ED6"],
+            hoverBackgroundColor: ["#FF5000", "#FF9900", "#FFED00", "#52D900", "#7CDDEE", "#007EEE"],
             data: chartValue
           }
         ],

@@ -203,6 +203,7 @@ import ChartLine from "@/components/ChartLine";
         date: '',
         toggle_exclusive: 0,
         toggle_exclusive2: 0,
+        userData: [],
 
         menu: false,
         modal: false,
@@ -270,7 +271,11 @@ import ChartLine from "@/components/ChartLine";
                 .then((response) => {
                     //Success
                     this.expenses = response.data.Items;
-                    // console.log(response.data.Items);
+
+                    this.expenses.sort(function(a, b) {
+                        return new Date(a.date) - new Date(b.date);
+                    });
+                    console.log(this.expenses);
                 })
 
                 .catch(function (error) {
@@ -282,6 +287,29 @@ import ChartLine from "@/components/ChartLine";
                     // console.log(response);
                     // console.log("GET Request complete")
                 });
+
+            axios.get(`https://vir9lpv010.execute-api.us-east-1.amazonaws.com/production/users/${this.userId}`)
+            .then((response) => {
+                //Success
+                this.userData = response.data.Items;
+                // this.salary = this.userData[0].salary;
+                // console.log(this.userData[0]);
+                
+
+
+
+
+            })
+
+            .catch(function (error) {
+                //error
+                console.log(error);
+            })
+
+            .then(function () {
+                // console.log(response);
+                // console.log("GET Request complete")
+            });
         },
 
         methods: {
