@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.6",
+    "aws-sdk": "^2.978.0",
     "axios": "^0.21.1",
     "chart.js": "^2.9.4",
     "chartjs": "^0.3.24",

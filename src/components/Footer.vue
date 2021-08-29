@@ -25,7 +25,7 @@
         <v-divider></v-divider>
 
         <v-card-text class="white--text">
-            Join us in taking steps towards the greater good!
+            Join us in taking steps towards the greater good! Use Finclude!
             <br>
             <v-icon>mdi-copyright</v-icon> {{ new Date().getFullYear() }} — <strong>Tinman Sachs</strong>
         </v-card-text>

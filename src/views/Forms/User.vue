@@ -47,11 +47,11 @@
             <h2>Personal Financial Goals</h2>
             <v-row class="mt-1 mb-1">
                 <v-col>
-                    How much do you want to save?
+                    What is your savings target for the future?
                     <v-text-field v-model="savingGoal" outlined dense @change="displayMessage()" type="number"></v-text-field>
                 </v-col>
                 <v-col>
-                    When do you want to achieve this goal? [In Years]
+                    How long do you think it will take to achieve this goal? [In Years]
                     <v-text-field v-model="duration" outlined dense type="number" @change="displayMessage()"></v-text-field>
                 </v-col>
             </v-row>
