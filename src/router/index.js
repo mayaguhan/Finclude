@@ -75,7 +75,7 @@ const routes = [
     path: '/report',
     name: 'Report',
     component: () => import('../views/Forms/Report.vue')
-  }
+  },
   {
     path: '/clients',
     name: 'Clients',
