@@ -71,7 +71,13 @@ const routes = [
     path: '/expense',
     name: 'Expense',
     component: () => import('../views/ExpenseTracker.vue')
-  }
+  },
+  {
+    path: '/clients',
+    name: 'Clients',
+    component: () => import('../views/Clients.vue')
+  },
+
 ]
 
 const router = new VueRouter({
