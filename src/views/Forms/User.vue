@@ -175,6 +175,7 @@ export default {
             axios.put("https://vir9lpv010.execute-api.us-east-1.amazonaws.com/production/users", userObj)
                 .then(response => {
                     console.log(response);
+                    this.$store.commit("setUserId", id);
                 })
 
 

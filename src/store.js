@@ -12,7 +12,9 @@ export default new Vuex.Store({
         login: 0,
         agent: 0,
         user: "Guest",
-        SGAPIKEY: SENDGRID_API_KEY
+        SGAPIKEY: SENDGRID_API_KEY,
+        userId: "",
+        agentId: ""
 
     },
     mutations: { //synchronous way to update data
@@ -24,6 +26,12 @@ export default new Vuex.Store({
         },
         setAgent(state, payload){
             state.agent = payload;
+        },
+        setUserId(state, payload){
+            state.userId = payload;
+        },
+        setAgentId(state, payload){
+            state.agentId = payload;
         }
     },
     actions: {},
