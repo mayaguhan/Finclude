@@ -1,5 +1,8 @@
 # finclude
 
+## Solution Architecture
+![Alt text](public/assets/archi.png?raw=true "Title")
+
 ## Project setup
 ```
 npm install
