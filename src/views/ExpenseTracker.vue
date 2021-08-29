@@ -155,7 +155,7 @@
                             <ChartDoughnut :expenses="expenses" :key="componentKey" />
                         </v-col>
                         <v-col style="padding-left: 50px">
-                            <ChartLine :expenses="expenses" :key="componentKey" />
+                            <ChartLine :expenses="expenses" :key="componentKey2" />
                         </v-col>
                     </v-row>
                 </v-container>
@@ -307,6 +307,7 @@ import ChartLine from "@/components/ChartLine";
         monthlySave: 0,
         finalGoal: 0,
         componentKey: 0,
+        componentKey2: 0,
         menu: false,
         modal: false,
         menu2: false,
@@ -382,6 +383,7 @@ import ChartLine from "@/components/ChartLine";
                 axios.get(`https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses/${this.userId}`)
                     .then((response) => {
                         //Success
+                        console.log(response.data.Items);
                         this.expenses = response.data.Items;
 
                         this.expenses.sort(function(a, b) {
@@ -446,11 +448,11 @@ import ChartLine from "@/components/ChartLine";
                     let yearsToGoal = parseFloat(userData.yearsToGoal);
                     let currentSaving = parseFloat(userData.savings);
 
-                    this.weeklyGoal = (goal / (yearsToGoal * 52)).toFixed(2);
-                    this.weeklySave = (this.weeklyGoal - (salary + this.weeklyIncome[weekNo] - this.weeklyExpense[weekNo]) / 4).toFixed(2)
-                    this.monthlyGoal = (goal / (yearsToGoal * 12)).toFixed(2);
-                    this.monthlySave = (this.monthlyGoal - (salary + this.totalIncome - this.totalExpense)).toFixed(2)
-                    this.finalGoal = (goal - currentSaving).toFixed(2);
+                    this.weeklyGoal = (goal / (yearsToGoal * 52));
+                    this.weeklySave = (this.weeklyGoal - (salary + this.weeklyIncome[weekNo] - this.weeklyExpense[weekNo]) / 4)
+                    this.monthlyGoal = (goal / (yearsToGoal * 12));
+                    this.monthlySave = (this.monthlyGoal - (salary + this.totalIncome - this.totalExpense))
+                    this.finalGoal = (goal - currentSaving);
                 })
 
                 .catch(function (error) {
@@ -513,6 +515,7 @@ import ChartLine from "@/components/ChartLine";
                     console.log(response);
                     this.retrieveDetails();
                     this.componentKey += 1;
+                    this.componentKey2 += 1;
                 })
             },
 
@@ -550,6 +553,7 @@ import ChartLine from "@/components/ChartLine";
                         console.log(response);
                         this.retrieveDetails();
                         this.componentKey += 1;
+                        this.componentKey2 += 1;
                     })
                 }
                 this.close()

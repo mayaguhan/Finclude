@@ -64,7 +64,7 @@ export default {
           if ((this.chartExpense[expense].date.split("-")[1] == (new Date().getMonth() + 1))
           &&  (this.chartExpense[expense].date.split("-")[0] == (new Date().getFullYear()))) {
             
-            leftoverValue.push(leftoverAmt.toFixed(2));
+            leftoverValue.push(leftoverAmt);
             leftoverDay.push(this.chartExpense[expense].date.split("-")[2]);
 
             if (this.chartExpense[expense].type == "Expenses") { //Expense

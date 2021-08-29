@@ -11,7 +11,7 @@ export default new Vuex.Store({
         login: 0,
         agent: 0,
         user: "Guest",
-        userId: "",
+        userId: "123450",
         agentId: ""
 
     },

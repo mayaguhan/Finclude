@@ -51,7 +51,7 @@
                     <v-text-field v-model="savingGoal" outlined dense @change="displayMessage()" type="number"></v-text-field>
                 </v-col>
                 <v-col>
-                    How long do you think it will take to achieve this goal? [In Years]
+                    How many years will it take to achieve this goal?
                     <v-text-field v-model="duration" outlined dense type="number" @change="displayMessage()"></v-text-field>
                 </v-col>
             </v-row>
