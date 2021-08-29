@@ -46,15 +46,6 @@ export default {
       ],
 
       chartData: null,
-      // data: {
-      //   // expenditure: [20, 600, 40, 60, 80],
-      //   leftover: [this.salary, 180, 140, 80, 0]
-      // },
-      // labels: {
-      //   // expenditure: [1, 6, 11, 16, 21, 26, 31],
-      //   leftover: [1, 6, 11, 16, 21, 26, 31]
-      // },
-      // radio: "leftover"
     };
   },
   created() {
@@ -73,7 +64,7 @@ export default {
           if ((this.chartExpense[expense].date.split("-")[1] == (new Date().getMonth() + 1))
           &&  (this.chartExpense[expense].date.split("-")[0] == (new Date().getFullYear()))) {
             
-            leftoverValue.push(leftoverAmt);
+            leftoverValue.push(leftoverAmt.toFixed(2));
             leftoverDay.push(this.chartExpense[expense].date.split("-")[2]);
 
             if (this.chartExpense[expense].type == "Expenses") { //Expense
