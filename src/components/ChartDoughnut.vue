@@ -3,24 +3,38 @@
     <b-card img-bottom>
       <ChartDoughnutBase :chart-data="chartData" />
     </b-card>
+    <span>{{chartExpense}}</span>
   </b-card>
   <!-- <ChartDoughnutBase :chart-data="chartData" /> -->
 </template>
 
 <script>
+console.log("A");
 import ChartDoughnutBase from "@/components/ChartDoughnutBase";
 
 export default {
   components: {
     ChartDoughnutBase
   },
+  props: [
+    "expenses"
+  ],
   data() {
     return {
-      chartData: null
+      chartData: null,
+      chartExpense: JSON.parse(JSON.stringify(this.expenses)),
+      totalExpense: 0,
     };
   },
   mounted() {
     this.fillData();
+    console.log(this.chartExpense);
+    for (let expense in this.chartExpense) {
+      this.totalExpense += parseFloat(this.chartExpense[expense].amount);
+      // console.log(this.chartExpense[expense]);
+    }
+    console.log(this.totalExpense);
+
   },
   methods: {
     fillData() {
