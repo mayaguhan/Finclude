@@ -51,11 +51,8 @@ export default {
 
     for (let data in this.expenseData) {
       chartLabel.push(data);
-      chartValue.push(((this.expenseData[data] / this.totalExpense) * 100).toFixed(2));
+      chartValue.push(this.expenseData[data]);
     }
-    // console.log(chartLabel);
-    // console.log(chartValue);
-
     this.fillData(chartLabel, chartValue);
 
 
