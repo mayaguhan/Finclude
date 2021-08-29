@@ -151,7 +151,7 @@
                         <ChartDoughnut :expenses="expenses" />
                     </v-col>
                     <v-col style="padding-left: 50px">
-                        <ChartLine />
+                        <ChartLine :expenses="expenses" />
                     </v-col>
                 </v-row>
             </v-container>
