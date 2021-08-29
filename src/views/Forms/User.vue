@@ -165,9 +165,10 @@ export default {
                 "salary": this.salary,
                 "goal": this.savingGoal,
                 "lang": this.language,
-                "yearsToGoal": this.yearsToGoal,
+                "yearsToGoal": this.duration,
                 "advisorId": "000000",
                 "monSavings": this.monSavings,
+                "savings": 0,
                 "imgUrl": "https://tinmansachs.s3.amazonaws.com/DefaultClient.jpg",
                 "tags": "newUser"
             }

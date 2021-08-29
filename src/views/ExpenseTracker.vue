@@ -41,7 +41,7 @@
 
                             <v-row>
                                 <v-col>
-                                    <v-text-field  v-model="editedItem.name" label="Transaction Name"></v-text-field>
+                                    <v-text-field dense outlined  v-model="editedItem.name" label="Transaction Name"></v-text-field>
                                 </v-col>
                             </v-row>
 
@@ -50,7 +50,7 @@
                                     <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40"
                                         transition="scale-transition" offset-y min-width="auto">
                                         <template v-slot:activator="{ on, attrs }">
-                                            <v-text-field v-model="date" label="Transaction Date" append-icon="mdi-calendar" 
+                                            <v-text-field dense outlined v-model="date" label="Transaction Date" append-icon="mdi-calendar" 
                                             readonly v-bind="attrs" v-on="on"></v-text-field>
                                         </template>
                                         <v-date-picker v-model="date" color="purple darken-2" @input="onDateChange"></v-date-picker>
@@ -60,7 +60,7 @@
 
                             <v-row>
                                 <v-col>
-                                    <v-text-field v-model="editedItem.amount" label="Amount ($)" type="number"></v-text-field>
+                                    <v-text-field dense outlined v-model="editedItem.amount" label="Amount ($)" type="number"></v-text-field>
                                 </v-col>
                             </v-row>
 
@@ -98,7 +98,7 @@
                 <template v-slot:top>
                     <v-toolbar flat>
                         <v-card-title>
-                            <v-text-field v-model="search" prepend-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
+                            <v-text-field dense outlined v-model="search" prepend-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
                         </v-card-title>
                         
                         <v-divider class="mx-4" inset vertical></v-divider>
@@ -175,23 +175,17 @@
 
                 </div>
 
-                <div style="margin:auto; text-align: center; padding-top: 50px">
-                    <h1><i>Final Goal</i></h1>
-                        You have to save <b><u>${{ finalGoal }}</u></b> more to hit your goal.
-
-                </div>
-
             </div>
         </template>
     </div>
 
     <div v-else>
-        <div v-if="!dashboardView">
+        <div v-if="!dashboardView" >
 
             <h2>No Transactions Available</h2>
             <v-dialog v-model="dialog" max-width="500px">
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="purple darken-2" dark class="mb-2 float-right" v-bind="attrs" v-on="on">
+                    <v-btn color="purple darken-2" dark class="mb-2 mr-3 float-right" v-bind="attrs" v-on="on">
                         New Transaction
                     </v-btn>
                 </template>
@@ -216,7 +210,7 @@
 
                             <v-row>
                                 <v-col>
-                                    <v-text-field  v-model="editedItem.name" label="Transaction Name"></v-text-field>
+                                    <v-text-field dense outlined  v-model="editedItem.name" label="Transaction Name"></v-text-field>
                                 </v-col>
                             </v-row>
 
@@ -225,7 +219,7 @@
                                     <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40"
                                         transition="scale-transition" offset-y min-width="auto">
                                         <template v-slot:activator="{ on, attrs }">
-                                            <v-text-field v-model="date" label="Transaction Date" append-icon="mdi-calendar" 
+                                            <v-text-field dense outlined v-model="date" label="Transaction Date" append-icon="mdi-calendar" 
                                             readonly v-bind="attrs" v-on="on"></v-text-field>
                                         </template>
                                         <v-date-picker v-model="date" color="purple darken-2" @input="onDateChange"></v-date-picker>
@@ -235,7 +229,7 @@
 
                             <v-row>
                                 <v-col>
-                                    <v-text-field v-model="editedItem.amount" label="Amount ($)" type="number"></v-text-field>
+                                    <v-text-field dense outlined v-model="editedItem.amount" label="Amount ($)" type="number"></v-text-field>
                                 </v-col>
                             </v-row>
 
@@ -445,14 +439,19 @@ import ChartLine from "@/components/ChartLine";
                     }
                     let goal = parseFloat(userData.goal);
                     let salary = parseFloat(userData.salary);
-                    let yearsToGoal = parseFloat(userData.yearsToGoal);
+                    console.log(userData);
+                    let yearsToGoal = parseInt(userData.yearsToGoal);
                     let currentSaving = parseFloat(userData.savings);
 
-                    this.weeklyGoal = (goal / (yearsToGoal * 52));
-                    this.weeklySave = (this.weeklyGoal - (salary + this.weeklyIncome[weekNo] - this.weeklyExpense[weekNo]) / 4)
-                    this.monthlyGoal = (goal / (yearsToGoal * 12));
-                    this.monthlySave = (this.monthlyGoal - (salary + this.totalIncome - this.totalExpense))
-                    this.finalGoal = (goal - currentSaving);
+                    console.log(goal);
+                    console.log(salary);
+                    console.log(yearsToGoal);
+
+                    this.weeklyGoal = (goal / (yearsToGoal * 52)).toFixed(2);
+                    this.weeklySave = (this.weeklyGoal - (salary + this.weeklyIncome[weekNo] - this.weeklyExpense[weekNo]) / 4).toFixed(2)
+                    this.monthlyGoal = (goal / (yearsToGoal * 12)).toFixed(2);
+                    this.monthlySave = (this.monthlyGoal - (salary + this.totalIncome - this.totalExpense)).toFixed(2)
+                    this.finalGoal = (goal - currentSaving).toFixed(2);
                 })
 
                 .catch(function (error) {
