@@ -1,4 +1,8 @@
-# finclude
+# Finclude
+https://master.de67h0ptv29py.amplifyapp.com/
+
+## About
+Finclude is a platform that seeks to connect pro bono financial advisors with people who need but cannot afford financial planning and advisory services, such as migrant workers and low-income households. Users are able to track their goals and expenditure, find relevant articles on financial literacy, and connect with pro bono advisors. Advisors can gain experience, forge more connections with communities and improve their social credibility. Join us in taking steps towards the greater good, use Finclude!
 
 ## Solution Architecture
 ![Alt text](public/assets/archi.png?raw=true "Title")
