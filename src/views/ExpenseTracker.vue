@@ -12,178 +12,266 @@
         </v-btn>
     </v-btn-toggle>
 
-    <div v-if="!dashboardView">
-    <v-data-table :headers="headers" :items="expenses" :search="search" sort-by="date" class="elevation-1">
-        <template v-slot:top>
-            <v-toolbar flat>
-                <v-card-title>
-                    <v-text-field v-model="search" prepend-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
-                </v-card-title>
-                
-                <v-divider class="mx-4" inset vertical></v-divider>
-                <v-spacer></v-spacer>
-                
-                <v-dialog v-model="dialog" max-width="500px">
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="purple darken-2" dark class="mb-2" v-bind="attrs" v-on="on">
-                            New Transaction
-                        </v-btn>
-                    </template>
-                    <v-card>
-                        <v-card-title>
-                            <span class="text-h5">{{ formTitle }}</span>
-                        </v-card-title>
-
-                        <v-card-text>
-                            <v-container>
-                                <v-row>
-                                    <v-btn-toggle v-model="toggle_exclusive2">
-                                        <v-btn color="success" @click="toggleTransaction('Income')">
-                                            <h4>Income</h4>
-                                        </v-btn>
-                                        
-                                        <v-btn color="error" @click="toggleTransaction('Expenses')">
-                                            <h4>Expenses</h4>
-                                        </v-btn>
-                                    </v-btn-toggle>
-                                </v-row>
-
-                                <v-row>
-                                    <v-col>
-                                        <v-text-field  v-model="editedItem.name" label="Transaction Name"></v-text-field>
-                                    </v-col>
-                                </v-row>
-
-                                <v-row>
-                                    <v-col>
-                                        <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40"
-                                            transition="scale-transition" offset-y min-width="auto">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field v-model="date" label="Transaction Date" append-icon="mdi-calendar" 
-                                                readonly v-bind="attrs" v-on="on"></v-text-field>
-                                            </template>
-                                            <v-date-picker v-model="date" color="purple darken-2" @input="onDateChange"></v-date-picker>
-                                        </v-menu>
-                                    </v-col>
-                                </v-row>
-
-                                <v-row>
-                                    <v-col>
-                                        <v-text-field v-model="editedItem.amount" label="Amount ($)" type="number"></v-text-field>
-                                    </v-col>
-                                </v-row>
-
-                                <v-row>
-                                    <v-col v-if="!incomeView">
-                                        <v-select v-model="editedItem.category" :items="expenseType" 
-                                        :menu-props="{ top: false, offsetY: true }" label="Transaction Category">
-                                        </v-select>
-                                    </v-col>
-
-                                    <v-col v-else>
-                                        <v-select v-model="editedItem.category" :items="incomeType" 
-                                        :menu-props="{ top: false, offsetY: true }" label="Transaction Category">
-                                        </v-select>
-                                    </v-col>
-                                </v-row>
-
-                            </v-container>
-                        </v-card-text>
-
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" text @click="close" >
-                                Cancel
-                            </v-btn>
-
-                            <v-btn color="blue darken-1" text @click="save">
-                                Save
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
-
-                <v-dialog v-model="dialogDelete" max-width="500px">
+    <div v-if="expenses.length != 0">
+        <div v-if="!dashboardView">
+            <v-dialog v-model="dialog" max-width="500px">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="purple darken-2" dark class="mb-2 float-right" v-bind="attrs" v-on="on">
+                        New Transaction
+                    </v-btn>
+                </template>
                 <v-card>
-                    <v-card-text style="text-align: center; color: red;">
-                        <div class="pt-10">
-                            <h2>Are you sure you want to delete this expense?</h2>
-                        </div>
-                        
+                    <v-card-title>
+                        <span class="text-h5">{{ formTitle }}</span>
+                    </v-card-title>
+
+                    <v-card-text>
+                        <v-container>
+                            <v-row>
+                                <v-btn-toggle v-model="toggle_exclusive2">
+                                    <v-btn color="success" @click="toggleTransaction('Income')">
+                                        <h4>Income</h4>
+                                    </v-btn>
+                                    
+                                    <v-btn color="error" @click="toggleTransaction('Expenses')">
+                                        <h4>Expenses</h4>
+                                    </v-btn>
+                                </v-btn-toggle>
+                            </v-row>
+
+                            <v-row>
+                                <v-col>
+                                    <v-text-field  v-model="editedItem.name" label="Transaction Name"></v-text-field>
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
+                                <v-col>
+                                    <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40"
+                                        transition="scale-transition" offset-y min-width="auto">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-text-field v-model="date" label="Transaction Date" append-icon="mdi-calendar" 
+                                            readonly v-bind="attrs" v-on="on"></v-text-field>
+                                        </template>
+                                        <v-date-picker v-model="date" color="purple darken-2" @input="onDateChange"></v-date-picker>
+                                    </v-menu>
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
+                                <v-col>
+                                    <v-text-field v-model="editedItem.amount" label="Amount ($)" type="number"></v-text-field>
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
+                                <v-col v-if="!incomeView">
+                                    <v-select v-model="editedItem.category" :items="expenseType" 
+                                    :menu-props="{ top: false, offsetY: true }" label="Transaction Category">
+                                    </v-select>
+                                </v-col>
+
+                                <v-col v-else>
+                                    <v-select v-model="editedItem.category" :items="incomeType" 
+                                    :menu-props="{ top: false, offsetY: true }" label="Transaction Category">
+                                    </v-select>
+                                </v-col>
+                            </v-row>
+
+                        </v-container>
                     </v-card-text>
+
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="deleteItemConfirm">Yes</v-btn>
-                        <v-btn color="blue darken-1" text @click="closeDelete">No</v-btn>
-                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="close" >
+                            Cancel
+                        </v-btn>
+
+                        <v-btn color="blue darken-1" text @click="save">
+                            Save
+                        </v-btn>
                     </v-card-actions>
                 </v-card>
-                </v-dialog>
-            </v-toolbar>
-        </template>
+            </v-dialog>
 
-        <template v-slot:[`item.actions`]="{ item }">
-            <v-icon small class="mr-2" @click="editItem(item)" color="purple">
-                mdi-pencil
-            </v-icon>
-            <v-icon small @click="deleteItem(item)" color="red">
-                mdi-delete
-            </v-icon>
-        </template>
+            <v-data-table :headers="headers" :items="expenses" :search="search" sort-by="date" class="elevation-1">
+                <template v-slot:top>
+                    <v-toolbar flat>
+                        <v-card-title>
+                            <v-text-field v-model="search" prepend-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
+                        </v-card-title>
+                        
+                        <v-divider class="mx-4" inset vertical></v-divider>
+                        <v-spacer></v-spacer>
 
-        <template v-slot:[`item.type`]="{ item }">
-            <v-chip :color="getColor(item.type)" dark>
-                {{ item.type }}
-            </v-chip>
-        </template>
+                        <v-dialog v-model="dialogDelete" max-width="500px">
+                        <v-card>
+                            <v-card-text style="text-align: center; color: red;">
+                                <div class="pt-10">
+                                    <h2>Are you sure you want to delete this expense?</h2>
+                                </div>
+                                
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">Yes</v-btn>
+                                <v-btn color="blue darken-1" text @click="closeDelete">No</v-btn>
+                                <v-spacer></v-spacer>
+                            </v-card-actions>
+                        </v-card>
+                        </v-dialog>
+                    </v-toolbar>
+                </template>
 
-        <template v-slot:no-data>
-            <v-btn color="primary" @click="initialize">
-                Reset
-            </v-btn>
-        </template>
-    </v-data-table>
+                <template v-slot:[`item.actions`]="{ item }">
+                    <v-icon small class="mr-2" @click="editItem(item)" color="purple">
+                        mdi-pencil
+                    </v-icon>
+                    <v-icon small @click="deleteItem(item)" color="red">
+                        mdi-delete
+                    </v-icon>
+                </template>
 
+                <template v-slot:[`item.type`]="{ item }">
+                    <v-chip :color="getColor(item.type)" dark>
+                        {{ item.type }}
+                    </v-chip>
+                </template>
 
-    </div >
+                <template v-slot:no-data>
+                    <v-btn color="primary" @click="initialize">
+                        Reset
+                    </v-btn>
+                </template>
+            </v-data-table>
+        </div >
 
-    <template v-else>
-        <div>
-            <v-container>
-                <h1 style="text-align: center">My Expenses </h1>
-                <v-row class="mt-6">
-                    <v-col style="padding-right: 50px">
-                        <ChartDoughnut :expenses="expenses" />
-                    </v-col>
-                    <v-col style="padding-left: 50px">
-                        <ChartLine :expenses="expenses" />
-                    </v-col>
-                </v-row>
-            </v-container>
+        <template v-else>
+            <div>
+                <v-container>
+                    <h1 style="text-align: center">My Expenses </h1>
+                    <v-row class="mt-6">
+                        <v-col style="padding-right: 50px">
+                            <ChartDoughnut :expenses="expenses" :key="componentKey" />
+                        </v-col>
+                        <v-col style="padding-left: 50px">
+                            <ChartLine :expenses="expenses" :key="componentKey" />
+                        </v-col>
+                    </v-row>
+                </v-container>
 
-            <div style="margin:auto; text-align:center; padding-top: 50px">
-                <h1><i>Weekly Goals to Achieve</i></h1>
-                    To hit your goal, you should only spend <b><u>${{ weeklyGoal }}</u></b> weekly.
-                    <br>
-                    You have to save <b><u>${{ weeklySave }}</u></b> more to hit your goal this week.
+                <div style="margin:auto; text-align:center; padding-top: 50px">
+                    <h1><i>Weekly Goals to Achieve</i></h1>
+                        To hit your goal, you should only spend <b><u>${{ weeklyGoal }}</u></b> weekly.
+                        <br>
+                        You have to save <b><u>${{ weeklySave }}</u></b> more to hit your goal this week.
+                </div>
+
+                <div style="margin:auto; text-align:center; padding-top: 50px">
+                    <h1><i>Monthly Goals to Achieve</i></h1>
+                        To hit your goal, you should only spend <b><u>${{ monthlyGoal }}</u></b> monthly.
+                        <br>
+                        You have to save <b><u>${{ monthlySave }}</u></b> more to hit your goal this month.
+
+                </div>
+
+                <div style="margin:auto; text-align: center; padding-top: 50px">
+                    <h1><i>Final Goal</i></h1>
+                        You have to save <b><u>${{ finalGoal }}</u></b> more to hit your goal.
+
+                </div>
+
             </div>
+        </template>
+    </div>
 
-            <div style="margin:auto; text-align:center; padding-top: 50px">
-                <h1><i>Monthly Goals to Achieve</i></h1>
-                    To hit your goal, you should only spend <b><u>${{ monthlyGoal }}</u></b> monthly.
-                    <br>
-                    You have to save <b><u>${{ monthlySave }}</u></b> more to hit your goal this month.
+    <div v-else>
+        <div v-if="!dashboardView">
 
-            </div>
+            <h2>No Transactions Available</h2>
+            <v-dialog v-model="dialog" max-width="500px">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="purple darken-2" dark class="mb-2 float-right" v-bind="attrs" v-on="on">
+                        New Transaction
+                    </v-btn>
+                </template>
+                <v-card>
+                    <v-card-title>
+                        <span class="text-h5">{{ formTitle }}</span>
+                    </v-card-title>
 
-            <div style="margin:auto; text-align: center; padding-top: 50px">
-                <h1><i>Final Goal</i></h1>
-                    You have to save <b><u>${{ finalGoal }}</u></b> more to hit your goal.
+                    <v-card-text>
+                        <v-container>
+                            <v-row>
+                                <v-btn-toggle v-model="toggle_exclusive2">
+                                    <v-btn color="success" @click="toggleTransaction('Income')">
+                                        <h4>Income</h4>
+                                    </v-btn>
+                                    
+                                    <v-btn color="error" @click="toggleTransaction('Expenses')">
+                                        <h4>Expenses</h4>
+                                    </v-btn>
+                                </v-btn-toggle>
+                            </v-row>
 
-            </div>
+                            <v-row>
+                                <v-col>
+                                    <v-text-field  v-model="editedItem.name" label="Transaction Name"></v-text-field>
+                                </v-col>
+                            </v-row>
 
+                            <v-row>
+                                <v-col>
+                                    <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40"
+                                        transition="scale-transition" offset-y min-width="auto">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-text-field v-model="date" label="Transaction Date" append-icon="mdi-calendar" 
+                                            readonly v-bind="attrs" v-on="on"></v-text-field>
+                                        </template>
+                                        <v-date-picker v-model="date" color="purple darken-2" @input="onDateChange"></v-date-picker>
+                                    </v-menu>
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
+                                <v-col>
+                                    <v-text-field v-model="editedItem.amount" label="Amount ($)" type="number"></v-text-field>
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
+                                <v-col v-if="!incomeView">
+                                    <v-select v-model="editedItem.category" :items="expenseType" 
+                                    :menu-props="{ top: false, offsetY: true }" label="Transaction Category">
+                                    </v-select>
+                                </v-col>
+
+                                <v-col v-else>
+                                    <v-select v-model="editedItem.category" :items="incomeType" 
+                                    :menu-props="{ top: false, offsetY: true }" label="Transaction Category">
+                                    </v-select>
+                                </v-col>
+                            </v-row>
+
+                        </v-container>
+                    </v-card-text>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="close" >
+                            Cancel
+                        </v-btn>
+
+                        <v-btn color="blue darken-1" text @click="save">
+                            Save
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </div>
-    </template>
+    </div>
+
+
 
     </div>
 </template>
@@ -218,12 +306,13 @@ import ChartLine from "@/components/ChartLine";
         monthlyGoal: 0,
         monthlySave: 0,
         finalGoal: 0,
-
+        componentKey: 0,
         menu: false,
         modal: false,
         menu2: false,
         type: "Expense",
-        userId: "123450",
+        userId: "",
+        // userId: "123450",
 
         dashboardView: false,
         incomeView: true,
@@ -280,44 +369,88 @@ import ChartLine from "@/components/ChartLine";
         },
 
         created() {
-            const axios = require('axios');
-            axios.get(`https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses/${this.userId}`)
-                .then((response) => {
-                    //Success
-                    this.expenses = response.data.Items;
+            this.retrieveDetails();
+            
+        },
 
-                    this.expenses.sort(function(a, b) {
-                        return new Date(a.date) - new Date(b.date);
-                    });
+        methods: {
+            retrieveDetails() {
+                var userIdStore = this.$store.state.userId;
+                this.userId = userIdStore;
 
-                    for (let expense in this.expenses) {
-                        let dateSplit = this.expenses[expense].date.split("-");
-                        if ((dateSplit[1] == (new Date().getMonth() + 1)) &&  (dateSplit[0] == (new Date().getFullYear())) ) {
-                            if (this.expenses[expense].type == "Expenses") { //Expense
-                                this.totalExpense += parseFloat(this.expenses[expense].amount);
-                                if (dateSplit[2] <= 7) {
-                                    this.weeklyExpense[0] += parseFloat(this.expenses[expense].amount);
-                                } else if (dateSplit[2] <= 14) {
-                                    this.weeklyExpense[1] += parseFloat(this.expenses[expense].amount);
-                                } else if (dateSplit[2] <= 21) {
-                                    this.weeklyExpense[2] += parseFloat(this.expenses[expense].amount);
+                const axios = require('axios');
+                axios.get(`https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses/${this.userId}`)
+                    .then((response) => {
+                        //Success
+                        this.expenses = response.data.Items;
+
+                        this.expenses.sort(function(a, b) {
+                            return new Date(a.date) - new Date(b.date);
+                        });
+
+                        for (let expense in this.expenses) {
+                            let dateSplit = this.expenses[expense].date.split("-");
+                            if ((dateSplit[1] == (new Date().getMonth() + 1)) &&  (dateSplit[0] == (new Date().getFullYear())) ) {
+                                if (this.expenses[expense].type == "Expenses") { //Expense
+                                    this.totalExpense += parseFloat(this.expenses[expense].amount);
+                                    if (dateSplit[2] <= 7) {
+                                        this.weeklyExpense[0] += parseFloat(this.expenses[expense].amount);
+                                    } else if (dateSplit[2] <= 14) {
+                                        this.weeklyExpense[1] += parseFloat(this.expenses[expense].amount);
+                                    } else if (dateSplit[2] <= 21) {
+                                        this.weeklyExpense[2] += parseFloat(this.expenses[expense].amount);
+                                    } else {
+                                        this.weeklyExpense[3] += parseFloat(this.expenses[expense].amount);
+                                    }
                                 } else {
-                                    this.weeklyExpense[3] += parseFloat(this.expenses[expense].amount);
-                                }
-                            } else {
-                                this.totalIncome += parseFloat(this.expenses[expense].amount);
-                                if (dateSplit[2] <= 7) {
-                                    this.weeklyIncome[0] += parseFloat(this.expenses[expense].amount);
-                                } else if (dateSplit[2] <= 14) {
-                                    this.weeklyIncome[1] += parseFloat(this.expenses[expense].amount);
-                                } else if (dateSplit[2] <= 21) {
-                                    this.weeklyIncome[2] += parseFloat(this.expenses[expense].amount);
-                                } else {
-                                    this.weeklyIncome[3] += parseFloat(this.expenses[expense].amount);
+                                    this.totalIncome += parseFloat(this.expenses[expense].amount);
+                                    if (dateSplit[2] <= 7) {
+                                        this.weeklyIncome[0] += parseFloat(this.expenses[expense].amount);
+                                    } else if (dateSplit[2] <= 14) {
+                                        this.weeklyIncome[1] += parseFloat(this.expenses[expense].amount);
+                                    } else if (dateSplit[2] <= 21) {
+                                        this.weeklyIncome[2] += parseFloat(this.expenses[expense].amount);
+                                    } else {
+                                        this.weeklyIncome[3] += parseFloat(this.expenses[expense].amount);
+                                    }
                                 }
                             }
                         }
+                    })
+
+                    .catch(function (error) {
+                        //error
+                        console.log(error);
+                    })
+
+                    .then(function () {
+                        // console.log(response);
+                        // console.log("GET Request complete")
+                    });
+
+                axios.get(`https://vir9lpv010.execute-api.us-east-1.amazonaws.com/production/users/${this.userId}`)
+                .then((response) => {
+                    //Success
+                    console.log(response.data.Items[0]);
+                    let userData = response.data.Items[0];
+                    let weekNo = 3;
+                    if (new Date().getDate() <= 7) {
+                        weekNo = 0;
+                    } else if (new Date().getDate() <= 14) {
+                        weekNo = 1;
+                    } else if (new Date().getDate() <= 21) {
+                        weekNo = 2;
                     }
+                    let goal = parseFloat(userData.goal);
+                    let salary = parseFloat(userData.salary);
+                    let yearsToGoal = parseFloat(userData.yearsToGoal);
+                    let currentSaving = parseFloat(userData.savings);
+
+                    this.weeklyGoal = (goal / (yearsToGoal * 52)).toFixed(2);
+                    this.weeklySave = (this.weeklyGoal - (salary + this.weeklyIncome[weekNo] - this.weeklyExpense[weekNo]) / 4).toFixed(2)
+                    this.monthlyGoal = (goal / (yearsToGoal * 12)).toFixed(2);
+                    this.monthlySave = (this.monthlyGoal - (salary + this.totalIncome - this.totalExpense)).toFixed(2)
+                    this.finalGoal = (goal - currentSaving).toFixed(2);
                 })
 
                 .catch(function (error) {
@@ -329,43 +462,7 @@ import ChartLine from "@/components/ChartLine";
                     // console.log(response);
                     // console.log("GET Request complete")
                 });
-
-            axios.get(`https://vir9lpv010.execute-api.us-east-1.amazonaws.com/production/users/${this.userId}`)
-            .then((response) => {
-                //Success
-                let userData = response.data.Items[0];
-                let weekNo = 3;
-                if (new Date().getDate() <= 7) {
-                    weekNo = 0;
-                } else if (new Date().getDate() <= 14) {
-                    weekNo = 1;
-                } else if (new Date().getDate() <= 21) {
-                    weekNo = 2;
-                }
-                let goal = parseFloat(userData.goal);
-                let salary = parseFloat(userData.salary);
-                let yearsToGoal = parseFloat(userData.yearsToGoal);
-                let currentSaving = parseFloat(userData.savings);
-
-                this.weeklyGoal = (goal / (yearsToGoal * 52)).toFixed(2);
-                this.weeklySave = (this.weeklyGoal - (salary + this.weeklyIncome[weekNo] - this.weeklyExpense[weekNo]) / 4).toFixed(2)
-                this.monthlyGoal = (goal / (yearsToGoal * 12)).toFixed(2);
-                this.monthlySave = (this.monthlyGoal - (salary + this.totalIncome - this.totalExpense)).toFixed(2)
-                this.finalGoal = (goal - currentSaving).toFixed(2);
-            })
-
-            .catch(function (error) {
-                //error
-                console.log(error);
-            })
-
-            .then(function () {
-                // console.log(response);
-                // console.log("GET Request complete")
-            });
-        },
-
-        methods: {
+            },
             onDateChange() {
                 this.editedItem.date = this.date
                 this.defaultItem.date = this.date
@@ -414,6 +511,8 @@ import ChartLine from "@/components/ChartLine";
                 axios.delete(`https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses?userId=${this.userId}&name=${this.editedItem.name}`)
                 .then(response => {
                     console.log(response);
+                    this.retrieveDetails();
+                    this.componentKey += 1;
                 })
             },
 
@@ -449,6 +548,8 @@ import ChartLine from "@/components/ChartLine";
                     axios.put("https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses", this.editedItem)
                     .then(response => {
                         console.log(response);
+                        this.retrieveDetails();
+                        this.componentKey += 1;
                     })
                 }
                 this.close()

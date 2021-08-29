@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       userData: [],
-      userId: "123450",
+      userId: this.$store.state.userId,
       chartExpense: JSON.parse(JSON.stringify(this.expenses)),
       salary: 0,
       totalExpense: 0,
