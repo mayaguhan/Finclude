@@ -148,10 +148,10 @@
                 <h1 style="text-align: center">My Expenses </h1>
                 <v-row class="mt-6">
                     <v-col style="padding-right: 50px">
-                        <ChartDoughnut :expenses="expenses" />
+                        <ChartDoughnut :expenses="expenses" :key="componentKey" />
                     </v-col>
                     <v-col style="padding-left: 50px">
-                        <ChartLine :expenses="expenses" />
+                        <ChartLine :expenses="expenses" :key="comopnentKey" />
                     </v-col>
                 </v-row>
             </v-container>
@@ -204,7 +204,7 @@ import ChartLine from "@/components/ChartLine";
         toggle_exclusive: 0,
         toggle_exclusive2: 0,
         userData: [],
-
+        componentKey: 0,
         menu: false,
         modal: false,
         menu2: false,
@@ -266,16 +266,40 @@ import ChartLine from "@/components/ChartLine";
         },
 
         created() {
-            const axios = require('axios');
-            axios.get('https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses/123450')
+            this.retrieveLatest();
+        },
+
+        methods: {
+            retrieveLatest(){
+                const axios = require('axios');
+                axios.get('https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses/123450')
+                    .then((response) => {
+                        //Success
+                        this.expenses = response.data.Items;
+
+                        this.expenses.sort(function(a, b) {
+                            return new Date(a.date) - new Date(b.date);
+                        });
+                        console.log(this.expenses);
+                    })
+
+                    .catch(function (error) {
+                        //error
+                        console.log(error);
+                    })
+
+                    .then(function () {
+                        // console.log(response);
+                        // console.log("GET Request complete")
+                    });
+
+                axios.get(`https://vir9lpv010.execute-api.us-east-1.amazonaws.com/production/users/${this.userId}`)
                 .then((response) => {
                     //Success
-                    this.expenses = response.data.Items;
+                    this.userData = response.data.Items;
+                    // this.salary = this.userData[0].salary;
+                    // console.log(this.userData[0]);
 
-                    this.expenses.sort(function(a, b) {
-                        return new Date(a.date) - new Date(b.date);
-                    });
-                    console.log(this.expenses);
                 })
 
                 .catch(function (error) {
@@ -287,32 +311,8 @@ import ChartLine from "@/components/ChartLine";
                     // console.log(response);
                     // console.log("GET Request complete")
                 });
-
-            axios.get(`https://vir9lpv010.execute-api.us-east-1.amazonaws.com/production/users/${this.userId}`)
-            .then((response) => {
-                //Success
-                this.userData = response.data.Items;
-                // this.salary = this.userData[0].salary;
-                // console.log(this.userData[0]);
-                
-
-
-
-
-            })
-
-            .catch(function (error) {
-                //error
-                console.log(error);
-            })
-
-            .then(function () {
-                // console.log(response);
-                // console.log("GET Request complete")
-            });
-        },
-
-        methods: {
+            },
+            
             onDateChange() {
                 this.editedItem.date = this.date
                 this.defaultItem.date = this.date
@@ -361,6 +361,8 @@ import ChartLine from "@/components/ChartLine";
                 axios.delete(`https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses?userId=${this.userId}&name=${this.editedItem.name}`)
                 .then(response => {
                     console.log(response);
+                    this.retrieveLatest();
+                    this.componentKey += 1;
                 })
             },
 
@@ -396,6 +398,8 @@ import ChartLine from "@/components/ChartLine";
                     axios.put("https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses", this.editedItem)
                     .then(response => {
                         console.log(response);
+                        this.retrieveLatest();
+                        this.componentKey += 1;
                     })
                 }
                 this.close()
