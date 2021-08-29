@@ -58,8 +58,8 @@
                             dark
                             >{{ person.firstName }}'s Expenditure Details</v-toolbar>
                             <v-card-text>
-                                <div id="test">
-                                    <table class="pt-4">
+                                <div id="test" class="pt-5">
+                                    <table>
                                         <tr style="color: #580057">
                                             <td>
                                                <b>Title</b> 
@@ -208,12 +208,12 @@ export default {
 table {
     margin: 0 auto; /* or margin: 0 auto 0 auto */
     border: none;
+    border-collapse: collapse;
     
 }
 
 tr:nth-child(even) {
     background-color: #f7e1fa;
-    border: 1px solid black;
 }
 
 td, th {

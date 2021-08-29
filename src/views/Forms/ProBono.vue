@@ -157,6 +157,7 @@ export default {
             axios.put("https://sg7f8ajqok.execute-api.us-east-1.amazonaws.com/production/agents", proBonoObj)
                 .then(response => {
                     console.log(response);
+                    this.$store.commit("setAgentId", id);
                 })
 
 
@@ -167,7 +168,7 @@ export default {
             
 
             // If success, redirect
-            this.$router.push('/homepage');
+            this.$router.push('/agenthomepage');
         }
     },
     computed: {

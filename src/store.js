@@ -4,7 +4,6 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-var SENDGRID_API_KEY="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";
 
 
 export default new Vuex.Store({
@@ -12,7 +11,6 @@ export default new Vuex.Store({
         login: 0,
         agent: 0,
         user: "Guest",
-        SGAPIKEY: SENDGRID_API_KEY,
         userId: "",
         agentId: ""
 
