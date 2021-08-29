@@ -6,7 +6,7 @@
       dark
     >
       <v-toolbar-title v-if="agent()">
-        <router-link to="/homepage" id="textRouterLink" style="text-decoration: none; color: white">
+        <router-link to="/agenthomepage" id="textRouterLink" style="text-decoration: none; color: white">
           <img src="../../public/assets/logo.png" style="height: 80px; margin-top: 10px;">
         </router-link> 
       </v-toolbar-title>

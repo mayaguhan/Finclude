@@ -46,6 +46,28 @@ export default {
     methods: {
         submitForm() {
             // Function to send email
+
+            const sgMail = require('@sendgrid/mail')
+            var api = this.$store.state.SGAPIKEY;
+            sgMail.setApiKey(api)
+
+            const msg = {
+            to: 'rafe.ang@gmail.com', // Change to your recipient
+            from: 'enterprise.solution.management@gmail.com', // Change to your verified sender
+            subject: 'Consultation regarding client',
+            text: 'I want to consult something regarding my client.',
+            html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+            }
+
+            sgMail
+                .send(msg)
+                .then((response) => {
+                    console.log(response[0].statusCode)
+                    console.log(response[0].headers)
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
         }
     },
     computed: {
