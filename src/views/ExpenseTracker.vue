@@ -158,22 +158,22 @@
 
             <div style="margin:auto; text-align:center; padding-top: 50px">
                 <h1><i>Weekly Goals to Achieve</i></h1>
-                    To hit your goal, you should only spend ______ weekly.
+                    To hit your goal, you should only spend <b><u>${{ weeklyGoal }}</u></b> weekly.
                     <br>
-                    You have to save _____ more to hit your goal this week.
+                    You have to save <b><u>${{ weeklySave }}</u></b> more to hit your goal this week.
             </div>
 
             <div style="margin:auto; text-align:center; padding-top: 50px">
                 <h1><i>Monthly Goals to Achieve</i></h1>
-                    To hit your goal, you should only spend ______ monthly.
+                    To hit your goal, you should only spend <b><u>${{ monthlyGoal }}</u></b> monthly.
                     <br>
-                    You have to save _____ more to hit your goal this month.
+                    You have to save <b><u>${{ monthlySave }}</u></b> more to hit your goal this month.
 
             </div>
 
             <div style="margin:auto; text-align: center; padding-top: 50px">
                 <h1><i>Final Goal</i></h1>
-                    You have to save _____ more to hit your goal.
+                    You have to save <b><u>${{ finalGoal }}</u></b> more to hit your goal.
 
             </div>
 
@@ -204,6 +204,15 @@ import ChartLine from "@/components/ChartLine";
         toggle_exclusive: 0,
         toggle_exclusive2: 0,
         userData: [],
+        weeklyExpense: [0,0,0,0],
+        weeklyIncome: [0,0,0,0],
+        totalExpense: 0,
+        totalIncome: 0,
+        weeklyGoal: 0,
+        weeklySave: 0,
+        monthlyGoal: 0,
+        monthlySave: 0,
+        finalGoal: 0,
 
         menu: false,
         modal: false,
@@ -267,7 +276,7 @@ import ChartLine from "@/components/ChartLine";
 
         created() {
             const axios = require('axios');
-            axios.get('https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses/123450')
+            axios.get(`https://30kjo8lvo2.execute-api.us-east-1.amazonaws.com/production/expenses/${this.userId}`)
                 .then((response) => {
                     //Success
                     this.expenses = response.data.Items;
@@ -275,7 +284,35 @@ import ChartLine from "@/components/ChartLine";
                     this.expenses.sort(function(a, b) {
                         return new Date(a.date) - new Date(b.date);
                     });
-                    console.log(this.expenses);
+
+                    for (let expense in this.expenses) {
+                        let dateSplit = this.expenses[expense].date.split("-");
+                        if ((dateSplit[1] == (new Date().getMonth() + 1)) &&  (dateSplit[0] == (new Date().getFullYear())) ) {
+                            if (this.expenses[expense].type == "Expenses") { //Expense
+                                this.totalExpense += parseFloat(this.expenses[expense].amount);
+                                if (dateSplit[2] <= 7) {
+                                    this.weeklyExpense[0] += parseFloat(this.expenses[expense].amount);
+                                } else if (dateSplit[2] <= 14) {
+                                    this.weeklyExpense[1] += parseFloat(this.expenses[expense].amount);
+                                } else if (dateSplit[2] <= 21) {
+                                    this.weeklyExpense[2] += parseFloat(this.expenses[expense].amount);
+                                } else {
+                                    this.weeklyExpense[3] += parseFloat(this.expenses[expense].amount);
+                                }
+                            } else {
+                                this.totalIncome += parseFloat(this.expenses[expense].amount);
+                                if (dateSplit[2] <= 7) {
+                                    this.weeklyIncome[0] += parseFloat(this.expenses[expense].amount);
+                                } else if (dateSplit[2] <= 14) {
+                                    this.weeklyIncome[1] += parseFloat(this.expenses[expense].amount);
+                                } else if (dateSplit[2] <= 21) {
+                                    this.weeklyIncome[2] += parseFloat(this.expenses[expense].amount);
+                                } else {
+                                    this.weeklyIncome[3] += parseFloat(this.expenses[expense].amount);
+                                }
+                            }
+                        }
+                    }
                 })
 
                 .catch(function (error) {
@@ -291,14 +328,25 @@ import ChartLine from "@/components/ChartLine";
             axios.get(`https://vir9lpv010.execute-api.us-east-1.amazonaws.com/production/users/${this.userId}`)
             .then((response) => {
                 //Success
-                this.userData = response.data.Items;
-                // this.salary = this.userData[0].salary;
-                // console.log(this.userData[0]);
-                
+                let userData = response.data.Items[0];
+                let weekNo = 3;
+                if (new Date().getDate() <= 7) {
+                    weekNo = 0;
+                } else if (new Date().getDate() <= 14) {
+                    weekNo = 1;
+                } else if (new Date().getDate() <= 21) {
+                    weekNo = 2;
+                }
+                let goal = parseFloat(userData.goal);
+                let salary = parseFloat(userData.salary);
+                let yearsToGoal = parseFloat(userData.yearsToGoal);
+                let currentSaving = parseFloat(userData.savings);
 
-
-
-
+                this.weeklyGoal = (goal / (yearsToGoal * 52)).toFixed(2);
+                this.weeklySave = (this.weeklyGoal - (salary + this.weeklyIncome[weekNo] - this.weeklyExpense[weekNo]) / 4).toFixed(2)
+                this.monthlyGoal = (goal / (yearsToGoal * 12)).toFixed(2);
+                this.monthlySave = (this.monthlyGoal - (salary + this.totalIncome - this.totalExpense)).toFixed(2)
+                this.finalGoal = (goal - currentSaving).toFixed(2);
             })
 
             .catch(function (error) {

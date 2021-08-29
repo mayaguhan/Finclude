@@ -94,12 +94,6 @@ export default {
 
           }
         }
-        console.log(this.chartExpense);
-        console.log("Final Leftover: ", leftoverAmt);
-        console.log(this.lineData);
-
-
-
         this.fillData(leftoverDay, leftoverValue);
       })
 
