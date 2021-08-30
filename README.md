@@ -6,6 +6,8 @@ Finclude is a platform that seeks to connect pro bono financial advisors with pe
 
 ## Solution Architecture
 ![Alt text](public/assets/archi.png?raw=true "Title")
+
+
 *Lambda function code is in /public/assets/lambda folder
 
 ## Project setup
